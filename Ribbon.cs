@@ -51,7 +51,6 @@ namespace HeaderMarkup
                         name += " (" + i.ToString() + ")";
                     else return;
                 }
-                MessageBox.Show("Hello");
                 string markup = Markups.markups.SaveMarkup(workbook, checkBoxSaveShapes.Checked, checkBoxSaveMarkProperty.Checked);
                 workbook.SaveAs(Filename: Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx", FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
                 using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath, name + ".rg")))
