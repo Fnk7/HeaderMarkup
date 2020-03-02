@@ -35,22 +35,22 @@
         private void InitializeComponent()
         {
             this.tabHMarkup = this.Factory.CreateRibbonTab();
-            this.groupAnnotation = this.Factory.CreateRibbonGroup();
             this.groupSave = this.Factory.CreateRibbonGroup();
-            this.checkBoxDeleteShapes = this.Factory.CreateRibbonCheckBox();
+            this.checkBoxSaveShapes = this.Factory.CreateRibbonCheckBox();
             this.checkBoxSaveMarkFile = this.Factory.CreateRibbonCheckBox();
             this.checkBoxSaveMarkProperty = this.Factory.CreateRibbonCheckBox();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
-            this.buttonEraseMarkup = this.Factory.CreateRibbonButton();
-            this.buttonRedrawMarkup = this.Factory.CreateRibbonButton();
-            this.buttonShowMarkup = this.Factory.CreateRibbonButton();
-            this.buttonSaveMarkup = this.Factory.CreateRibbonButton();
+            this.buttonSaveToDataset = this.Factory.CreateRibbonButton();
+            this.groupAnnotation = this.Factory.CreateRibbonGroup();
             this.buttonMarkTable = this.Factory.CreateRibbonButton();
             this.buttonMarkHeader = this.Factory.CreateRibbonButton();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.buttonEraseShapes = this.Factory.CreateRibbonButton();
+            this.buttonRedrawShapes = this.Factory.CreateRibbonButton();
+            this.buttonReset = this.Factory.CreateRibbonButton();
             this.tabHMarkup.SuspendLayout();
-            this.groupAnnotation.SuspendLayout();
             this.groupSave.SuspendLayout();
+            this.groupAnnotation.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabHMarkup
@@ -59,33 +59,22 @@
             this.tabHMarkup.Groups.Add(this.groupAnnotation);
             this.tabHMarkup.Label = "HMarkup";
             this.tabHMarkup.Name = "tabHMarkup";
-            // 
-            // groupAnnotation
-            // 
-            this.groupAnnotation.Items.Add(this.buttonMarkTable);
-            this.groupAnnotation.Items.Add(this.buttonMarkHeader);
-            this.groupAnnotation.Items.Add(this.separator2);
-            this.groupAnnotation.Items.Add(this.buttonShowMarkup);
-            this.groupAnnotation.Items.Add(this.buttonEraseMarkup);
-            this.groupAnnotation.Items.Add(this.buttonRedrawMarkup);
-            this.groupAnnotation.Label = "Annotation";
-            this.groupAnnotation.Name = "groupAnnotation";
+            this.tabHMarkup.Position = this.Factory.RibbonPosition.AfterOfficeId("TabInsert");
             // 
             // groupSave
             // 
-            this.groupSave.Items.Add(this.checkBoxDeleteShapes);
+            this.groupSave.Items.Add(this.checkBoxSaveShapes);
             this.groupSave.Items.Add(this.checkBoxSaveMarkFile);
             this.groupSave.Items.Add(this.checkBoxSaveMarkProperty);
             this.groupSave.Items.Add(this.separator1);
-            this.groupSave.Items.Add(this.buttonSaveMarkup);
+            this.groupSave.Items.Add(this.buttonSaveToDataset);
             this.groupSave.Label = "Save";
             this.groupSave.Name = "groupSave";
             // 
-            // checkBoxDeleteShapes
+            // checkBoxSaveShapes
             // 
-            this.checkBoxDeleteShapes.Checked = true;
-            this.checkBoxDeleteShapes.Label = "Delete Shapes";
-            this.checkBoxDeleteShapes.Name = "checkBoxDeleteShapes";
+            this.checkBoxSaveShapes.Label = "Save Shapes";
+            this.checkBoxSaveShapes.Name = "checkBoxSaveShapes";
             // 
             // checkBoxSaveMarkFile
             // 
@@ -103,36 +92,25 @@
             // 
             this.separator1.Name = "separator1";
             // 
-            // separator2
+            // buttonSaveToDataset
             // 
-            this.separator2.Name = "separator2";
+            this.buttonSaveToDataset.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.buttonSaveToDataset.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
+            this.buttonSaveToDataset.Label = "Save to Dataset";
+            this.buttonSaveToDataset.Name = "buttonSaveToDataset";
+            this.buttonSaveToDataset.ShowImage = true;
+            this.buttonSaveToDataset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveToDataset_Click);
             // 
-            // buttonEraseMarkup
+            // groupAnnotation
             // 
-            this.buttonEraseMarkup.Label = "Erase Markup";
-            this.buttonEraseMarkup.Name = "buttonEraseMarkup";
-            this.buttonEraseMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonEraseMarkup_Click);
-            // 
-            // buttonRedrawMarkup
-            // 
-            this.buttonRedrawMarkup.Label = "Redraw Markup";
-            this.buttonRedrawMarkup.Name = "buttonRedrawMarkup";
-            this.buttonRedrawMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonRedrawMarkup_Click);
-            // 
-            // buttonShowMarkup
-            // 
-            this.buttonShowMarkup.Label = "Show Markup";
-            this.buttonShowMarkup.Name = "buttonShowMarkup";
-            this.buttonShowMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonShowMarkup_Click);
-            // 
-            // buttonSaveMarkup
-            // 
-            this.buttonSaveMarkup.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.buttonSaveMarkup.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
-            this.buttonSaveMarkup.Label = "Save Markup";
-            this.buttonSaveMarkup.Name = "buttonSaveMarkup";
-            this.buttonSaveMarkup.ShowImage = true;
-            this.buttonSaveMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveMarkup_Click);
+            this.groupAnnotation.Items.Add(this.buttonMarkTable);
+            this.groupAnnotation.Items.Add(this.buttonMarkHeader);
+            this.groupAnnotation.Items.Add(this.separator2);
+            this.groupAnnotation.Items.Add(this.buttonEraseShapes);
+            this.groupAnnotation.Items.Add(this.buttonRedrawShapes);
+            this.groupAnnotation.Items.Add(this.buttonReset);
+            this.groupAnnotation.Label = "Annotation";
+            this.groupAnnotation.Name = "groupAnnotation";
             // 
             // buttonMarkTable
             // 
@@ -152,6 +130,34 @@
             this.buttonMarkHeader.ShowImage = true;
             this.buttonMarkHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
+            // 
+            // buttonEraseShapes
+            // 
+            this.buttonEraseShapes.Image = global::HeaderMarkup.Properties.Resources.Erase;
+            this.buttonEraseShapes.Label = "Erase";
+            this.buttonEraseShapes.Name = "buttonEraseShapes";
+            this.buttonEraseShapes.ShowImage = true;
+            this.buttonEraseShapes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonEraseShapes_Click);
+            // 
+            // buttonRedrawShapes
+            // 
+            this.buttonRedrawShapes.Image = global::HeaderMarkup.Properties.Resources.Redraw;
+            this.buttonRedrawShapes.Label = "Redraw";
+            this.buttonRedrawShapes.Name = "buttonRedrawShapes";
+            this.buttonRedrawShapes.ShowImage = true;
+            this.buttonRedrawShapes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonRedrawShapes_Click);
+            // 
+            // buttonReset
+            // 
+            this.buttonReset.Image = global::HeaderMarkup.Properties.Resources.Reset;
+            this.buttonReset.Label = "Reset";
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.ShowImage = true;
+            this.buttonReset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonReset_Click);
+            // 
             // Ribbon
             // 
             this.Name = "Ribbon";
@@ -160,10 +166,10 @@
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon_Load);
             this.tabHMarkup.ResumeLayout(false);
             this.tabHMarkup.PerformLayout();
-            this.groupAnnotation.ResumeLayout(false);
-            this.groupAnnotation.PerformLayout();
             this.groupSave.ResumeLayout(false);
             this.groupSave.PerformLayout();
+            this.groupAnnotation.ResumeLayout(false);
+            this.groupAnnotation.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -175,15 +181,15 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSave;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonMarkTable;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonMarkHeader;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxDeleteShapes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveShapes;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveMarkFile;
         internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveMarkProperty;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSaveMarkup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSaveToDataset;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonShowMarkup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonEraseMarkup;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonRedrawMarkup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonEraseShapes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonRedrawShapes;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonReset;
     }
 
     partial class ThisRibbonCollection

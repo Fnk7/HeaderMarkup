@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HeaderMarkup.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MaxMarkupEdgeSize" Type="System.Int64" Scope="Application">
+      <Value Profile="(Default)">10000</Value>
+    </Setting>
+    <Setting Name="MarkupTableLine" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarkupTableLine_</Value>
+    </Setting>
+    <Setting Name="MarkupTable" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarkupTable_</Value>
+    </Setting>
+    <Setting Name="MarkupHeaderLine" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarkupHeaderLine_</Value>
+    </Setting>
+    <Setting Name="MarkupHeader" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarkupHeader_</Value>
+    </Setting>
+    <Setting Name="MarkupShapesCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MarkupDatasetAnnotatedPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Dataset\Annotated\</Value>
+    </Setting>
+    <Setting Name="MarkupDatasetENUESPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Dataset\ENUSE\</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
