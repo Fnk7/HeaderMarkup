@@ -42,7 +42,7 @@ namespace HeaderMarkup
                     DialogResult dialogResult = MessageBox.Show("在" + Properties.Settings.Default.MarkupDatasetAnnotatedPath + 
                         "中有同名文件。\n\tYes:删除同名文件。\n\tNO:使用 " + name + " (" + i.ToString() + ").xlsx",
                         "文件重名", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.OK)
+                    if (dialogResult == DialogResult.Yes)
                     {
                         File.Delete(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx"));
                         File.Delete(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".rg"));
@@ -51,6 +51,7 @@ namespace HeaderMarkup
                         name += " (" + i.ToString() + ")";
                     else return;
                 }
+                MessageBox.Show("Hello");
                 string markup = Markups.markups.SaveMarkup(workbook, checkBoxSaveShapes.Checked, checkBoxSaveMarkProperty.Checked);
                 workbook.SaveAs(Filename: Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx", FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
                 using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath, name + ".rg")))

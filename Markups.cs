@@ -223,9 +223,9 @@ namespace HeaderMarkup
             {
                 Office.DocumentProperties properties = workbook.CustomDocumentProperties;
                 foreach (Office.DocumentProperty property in properties)
-                    if (property.Name == "HMarker")
+                    if (property.Name == "HMarkup")
                         property.Delete();
-                properties.Add("HMarker", false, Office.MsoDocProperties.msoPropertyTypeString, markupProperty, null);
+                properties.Add("HMarkup", false, Office.MsoDocProperties.msoPropertyTypeString, markupProperty, null);
             }
             return markupProperty;
         }
