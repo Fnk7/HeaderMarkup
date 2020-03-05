@@ -26,99 +26,108 @@ namespace HeaderMarkup.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10000")]
-        public long MaxMarkupEdgeSize {
+        public long MaxEdgeSize {
             get {
-                return ((long)(this["MaxMarkupEdgeSize"]));
+                return ((long)(this["MaxEdgeSize"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MarkupEdge")]
-        public string MarkupTableEdge {
+        public string TableEdge {
             get {
-                return ((string)(this["MarkupTableEdge"]));
+                return ((string)(this["TableEdge"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MarkupTable")]
-        public string MarkupTable {
+        public string Table {
             get {
-                return ((string)(this["MarkupTable"]));
+                return ((string)(this["Table"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MarkupLine")]
-        public string MarkupNonTableLine {
+        public string MarkAreaLine {
             get {
-                return ((string)(this["MarkupNonTableLine"]));
+                return ((string)(this["MarkAreaLine"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkupNonTable")]
-        public string MarkupNonTable {
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkupArea")]
+        public string MarkArea {
             get {
-                return ((string)(this["MarkupNonTable"]));
+                return ((string)(this["MarkArea"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int MarkupShapesCount {
+        public int ShapesCount {
             get {
-                return ((int)(this["MarkupShapesCount"]));
+                return ((int)(this["ShapesCount"]));
             }
             set {
-                this["MarkupShapesCount"] = value;
+                this["ShapesCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\Dataset\\Annotated\\")]
-        public string MarkupDatasetAnnotatedPath {
+        public string DatasetAnnotatedPath {
             get {
-                return ((string)(this["MarkupDatasetAnnotatedPath"]));
+                return ((string)(this["DatasetAnnotatedPath"]));
             }
             set {
-                this["MarkupDatasetAnnotatedPath"] = value;
+                this["DatasetAnnotatedPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\Dataset\\ENUSE\\")]
-        public string MarkupDatasetENUESPath {
+        public string DatasetEUESPath {
             get {
-                return ((string)(this["MarkupDatasetENUESPath"]));
+                return ((string)(this["DatasetEUESPath"]));
             }
             set {
-                this["MarkupDatasetENUESPath"] = value;
+                this["DatasetEUESPath"] = value;
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public float MarkupDrawTableInterval {
+        public float DrawTableInterval {
             get {
-                return ((float)(this["MarkupDrawTableInterval"]));
+                return ((float)(this["DrawTableInterval"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public float MarkupDrawNonTableInterval {
+        public float DrawMarkAreaInterval {
             get {
-                return ((float)(this["MarkupDrawNonTableInterval"]));
+                return ((float)(this["DrawMarkAreaInterval"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int non {
+            get {
+                return ((int)(this["non"]));
             }
         }
     }

@@ -73,6 +73,16 @@ namespace HeaderMarkup.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap Little {
+            get {
+                object obj = ResourceManager.GetObject("Little", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap MarkHeader {
             get {
                 object obj = ResourceManager.GetObject("MarkHeader", resourceCulture);
@@ -86,6 +96,16 @@ namespace HeaderMarkup.Properties {
         internal static System.Drawing.Bitmap MarkTable {
             get {
                 object obj = ResourceManager.GetObject("MarkTable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Quite {
+            get {
+                object obj = ResourceManager.GetObject("Quite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

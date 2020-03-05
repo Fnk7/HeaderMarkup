@@ -23,37 +23,29 @@ namespace HeaderMarkup
         {
             try
             {
+                
                 Excel.Workbook workbook = Globals.ThisAddIn.Application.ActiveWorkbook;
-                if (!Directory.Exists(Properties.Settings.Default.MarkupDatasetAnnotatedPath)) 
-                    Directory.CreateDirectory(Properties.Settings.Default.MarkupDatasetAnnotatedPath);
-                if (string.Equals(Properties.Settings.Default.MarkupDatasetAnnotatedPath.TrimEnd(Path.DirectorySeparatorChar), workbook.Path.TrimEnd(Path.DirectorySeparatorChar), StringComparison.InvariantCultureIgnoreCase) && workbook.FileFormat == Excel.XlFileFormat.xlOpenXMLWorkbook)
-                {
-                    MessageBox.Show("不能保存" + Properties.Settings.Default.MarkupDatasetAnnotatedPath + "中的文件！");
-                    return;
-                }
-                string name = workbook.Name;
+                string markup = Markups.markups.SaveMarkup(workbook, checkBoxSaveShapes.Checked, checkBoxSaveMarkProperty.Checked);
+                string annotatedPath = Properties.Settings.Default.DatasetAnnotatedPath, name = workbook.Name, xlsx = ".xlsx", range = ".range";
+                if (!Directory.Exists(annotatedPath)) 
+                    Directory.CreateDirectory(annotatedPath);
                 if(!string.IsNullOrEmpty(workbook.Path) && name.Contains('.'))
                     name = Path.GetFileNameWithoutExtension(workbook.FullName);
-                if (File.Exists(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx")))
-                {
-                    int i = 1;
-                    while (File.Exists(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath, name + " (" + i.ToString() + ").xlsx")))
-                        i++;
-                    DialogResult dialogResult = MessageBox.Show("在" + Properties.Settings.Default.MarkupDatasetAnnotatedPath + 
-                        "中有同名文件。\n\tYes:删除同名文件。\n\tNO:使用 " + name + " (" + i.ToString() + ").xlsx",
-                        "文件重名", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes)
+                if (File.Exists(Path.Combine(annotatedPath + name + xlsx)))
+                    if (string.Equals(Path.Combine(annotatedPath, name + xlsx), workbook.FullName, StringComparison.InvariantCultureIgnoreCase))
+                        workbook.Save();
+                    else
                     {
-                        File.Delete(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx"));
-                        File.Delete(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".rg"));
+                        DialogResult dialogResult = MessageBox.Show("已有" + name + xlsx + "标注文件，是否替换？", "替换文件", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                        if (dialogResult == DialogResult.OK)
+                        {
+                            File.Delete(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath + name + xlsx));
+                            File.Delete(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath + name + range));
+                        }
+                        else return;
+                        workbook.SaveAs(Filename: Properties.Settings.Default.DatasetAnnotatedPath + name + xlsx, FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
                     }
-                    else if (dialogResult == DialogResult.No)
-                        name += " (" + i.ToString() + ")";
-                    else return;
-                }
-                string markup = Markups.markups.SaveMarkup(workbook, checkBoxSaveShapes.Checked, checkBoxSaveMarkProperty.Checked);
-                workbook.SaveAs(Filename: Properties.Settings.Default.MarkupDatasetAnnotatedPath + name + ".xlsx", FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
-                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Properties.Settings.Default.MarkupDatasetAnnotatedPath, name + ".rg")))
+                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath, name + range)))
                     streamWriter.Write(markup);
                 Markups.markups.Remove(workbook);
                 workbook.Close();
@@ -71,14 +63,19 @@ namespace HeaderMarkup
             return range;
         }
 
-        private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e) => Markups.markups.MarkTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
-
-        private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e) => Markups.markups.MarkHeader(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
+        private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
 
         private void buttonEraseShapes_Click(object sender, RibbonControlEventArgs e) => Markups.markups.EraseShapes(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
 
         private void buttonRedrawShapes_Click(object sender, RibbonControlEventArgs e) => Markups.markups.RedrawShapes(Globals.ThisAddIn.Application.ActiveWorkbook);
 
         private void buttonReset_Click(object sender, RibbonControlEventArgs e) => Markups.markups.Reset(Globals.ThisAddIn.Application.ActiveWorkbook);
+
+        // 标记区域
+        private void buttonTitleQuiteLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), -2);
+        private void buttonTitleLittleLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), -1);
+        private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 0);
+        private void buttonDataLittleLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 1);
+        private void buttonDataQuiteLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 2);
     }
 }

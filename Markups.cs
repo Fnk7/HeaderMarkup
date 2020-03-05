@@ -14,6 +14,8 @@ namespace HeaderMarkup
     using Sheet = List<RectArea>;
     using Book = Dictionary<string, List<RectArea>>;
 
+    #region RectArea 区域的实现
+
     class RectArea
     {
         #region 构造器
@@ -68,7 +70,7 @@ namespace HeaderMarkup
         protected static bool LegalRange(Excel.Range range)
         {
             if (range == null) return false;
-            if (range.Areas.Count != 1 || range.Height + range.Width > Properties.Settings.Default.MaxMarkupEdgeSize)
+            if (range.Areas.Count != 1 || range.Height + range.Width > Properties.Settings.Default.MaxEdgeSize)
                 return false;
             return true;
         }
@@ -80,7 +82,6 @@ namespace HeaderMarkup
         public bool IsInside(RectArea area) => (this.left >= area.left) && (this.top >= area.top) && (this.right <= area.right) && (this.bottom <= area.bottom);
 
     }
-
 
     class Table : RectArea
     {
@@ -104,16 +105,19 @@ namespace HeaderMarkup
 
     class MarkArea : RectArea
     {
-        private int type;
-        private MarkArea(string address, int type) : base(address) => this.type = type;
+        // 0 代表确认是表头，1，2代表偏向数据的程度，-1，-2偏向标题的程度。
+        public int Type { get; }
+        public static readonly int LikeTitle2 = -2, LikeTitle1 = -1, Header = 0, LikeData1 = 1, LikeData2 = 2;
+        private MarkArea(string address, int type) : base(address) => this.Type = type;
         public static MarkArea GetMarkArea(Excel.Range range, int type)
         {
             if (!RectArea.LegalRange(range)) return null;
             return new MarkArea(range.Address, type);
         }
-        public override string ToString() => "[Mk" + type.ToString() + Address + "]";
+        public override string ToString() => "[Mk" + Type.ToString() + Address + "]";
     }
 
+    #endregion
 
     class Markups
     {
@@ -139,7 +143,7 @@ namespace HeaderMarkup
             return null;
         }
 
-        public void MarkTable(Excel.Workbook workbook, Excel.Range range)
+        public void AddTable(Excel.Workbook workbook, Excel.Range range)
         {
             Table table = Table.GetTable(range);
             Sheet sheet = GetSheet(workbook);
@@ -150,21 +154,31 @@ namespace HeaderMarkup
             DrawTable(range);
         }
 
-        public void MarkHeader(Excel.Workbook workbook, Excel.Range range)
+        public void AddMarkArea(Excel.Workbook workbook, Excel.Range range, int type)
         {
-            MarkArea markArea = MarkArea.GetMarkArea(range, 0);
+            MarkArea markArea = MarkArea.GetMarkArea(range, type);
             Sheet sheet = GetSheet(workbook);
             if (markArea == null || sheet == null) return;
             Table table = null;
             foreach (var rectArea in sheet)
-                if (rectArea is Table && markArea.IsInside(rectArea))
+            {
+                if (rectArea is Table)
                 {
-                    table = (Table)rectArea;
-                    break;
+                    foreach (var temp in ((Table)rectArea).MarkAreas)
+                        if (markArea.IsOverlap(temp))
+                            return;
+                    if (markArea.IsInside(rectArea))
+                        table = (Table)rectArea;
                 }
-            if (table == null) return;
-            table.AddMarkArea(markArea);
-            DrawMarkArea(range);
+                else if (markArea.IsOverlap(rectArea))
+                    return;
+            }
+            if (type == MarkArea.LikeTitle2)
+                sheet.Add(markArea);
+            else if (table == null) return;
+            else
+                table.AddMarkArea(markArea);
+            DrawMarkArea(range, type);
         }
 
         public void EraseShapes(Excel.Worksheet worksheet)
@@ -173,7 +187,7 @@ namespace HeaderMarkup
             {
                 foreach (Excel.Shape shape in worksheet.Shapes)
                 {
-                    if (shape.Name.Contains(Properties.Settings.Default.MarkupTable) || shape.Name.Contains(Properties.Settings.Default.MarkupNonTable))
+                    if (shape.Name.Contains(Properties.Settings.Default.Table) || shape.Name.Contains(Properties.Settings.Default.MarkArea))
                         shape.Delete();
                 }
             }
@@ -198,7 +212,7 @@ namespace HeaderMarkup
                         Table table = (Table)rectArea;
                         DrawTable(worksheet.Range[table.Address]);
                         foreach (var markArea in table.MarkAreas)
-                            DrawMarkArea(worksheet.Range[markArea.Address]);
+                            DrawMarkArea(worksheet.Range[markArea.Address], markArea.Type);
                     }
                 }
             }
@@ -265,7 +279,7 @@ namespace HeaderMarkup
         // Table的一条边界
         private static float[,] TableEdge(double x1, double y1, double x2, double y2)
         {
-            float interval = Properties.Settings.Default.MarkupDrawTableInterval;
+            float interval = Properties.Settings.Default.DrawTableInterval;
             int steps = Math.Abs((int)((x2 - x1 + y2 - y1) / interval)) / 2 * 2 + 1;
             float[,] polyArray = new float[steps * 2 + 2, 2];
             polyArray[0, 0] = Convert.ToSingle(x1);
@@ -299,17 +313,17 @@ namespace HeaderMarkup
             for (int i = 0; i < 4; i++)
             {
                 Excel.Shape edge = worksheet.Shapes.AddPolyline(TableEdge(points[i, 0], points[i, 1], points[(i + 1) % 4, 0], points[(i + 1) % 4, 1]));
-                edge.Name = Properties.Settings.Default.MarkupTableEdge + Properties.Settings.Default.MarkupShapesCount.ToString() + "-" + i.ToString();
+                edge.Name = Properties.Settings.Default.TableEdge + Properties.Settings.Default.ShapesCount.ToString() + "-" + i.ToString();
                 shapes[i] = edge.Name;
             }
             Excel.Shape shape = worksheet.Shapes.Range[shapes].Group();
             shape.Line.Weight = 2.0f;
-            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.Red);
-            shape.Name = Properties.Settings.Default.MarkupTable + Properties.Settings.Default.MarkupShapesCount.ToString();
-            Properties.Settings.Default.MarkupShapesCount++;
+            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.Blue);
+            shape.Name = Properties.Settings.Default.Table + Properties.Settings.Default.ShapesCount.ToString();
+            Properties.Settings.Default.ShapesCount++;
         }
 
-        // 
+        // 画出MarkArea的阴影
         private struct Point
         {
             public float x, y;
@@ -320,11 +334,11 @@ namespace HeaderMarkup
             }
         }
 
-        private static void DrawMarkArea(Excel.Range range)
+        private static void DrawMarkArea(Excel.Range range, int type)
         {
             Excel.Worksheet worksheet = range.Worksheet;
             double left = range.Left, top = range.Top, width = range.Width, height = range.Height;
-            float interval = Properties.Settings.Default.MarkupDrawNonTableInterval;
+            float interval = Properties.Settings.Default.DrawMarkAreaInterval;
             int start = (int)((left + top) / interval) + 1, end = (int)((left + top + height + width) / interval);
             object[] lines = new object[end - start + 1];
             Point point1 = new Point(), point2 = new Point();
@@ -339,14 +353,14 @@ namespace HeaderMarkup
                 else
                     point2.SetPoint(interval * i - top - height, top + height);
                 var line = worksheet.Shapes.AddLine(point1.x, point1.y, point2.x, point2.y);
-                line.Name = Properties.Settings.Default.MarkupNonTableLine + Properties.Settings.Default.MarkupShapesCount.ToString() + "-" + i.ToString();
+                line.Name = Properties.Settings.Default.MarkAreaLine + Properties.Settings.Default.ShapesCount.ToString() + "-" + i.ToString();
                 lines[i - start] = line.Name;
             }
             Excel.Shape shape = worksheet.Shapes.Range[lines].Group();
-            shape.Name = Properties.Settings.Default.MarkupNonTable + Properties.Settings.Default.MarkupShapesCount.ToString();
+            shape.Name = Properties.Settings.Default.MarkArea + Properties.Settings.Default.ShapesCount.ToString();
             shape.Line.Weight = 1.5f;
-            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.Orange);
-            Properties.Settings.Default.MarkupShapesCount++;
+            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
+            Properties.Settings.Default.ShapesCount++;
         }
 
         #endregion

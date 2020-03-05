@@ -2,35 +2,38 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="HeaderMarkup.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="MaxMarkupEdgeSize" Type="System.Int64" Scope="Application">
+    <Setting Name="MaxEdgeSize" Type="System.Int64" Scope="Application">
       <Value Profile="(Default)">10000</Value>
     </Setting>
-    <Setting Name="MarkupTableEdge" Type="System.String" Scope="Application">
+    <Setting Name="TableEdge" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MarkupEdge</Value>
     </Setting>
-    <Setting Name="MarkupTable" Type="System.String" Scope="Application">
+    <Setting Name="Table" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MarkupTable</Value>
     </Setting>
-    <Setting Name="MarkupNonTableLine" Type="System.String" Scope="Application">
+    <Setting Name="MarkAreaLine" Type="System.String" Scope="Application">
       <Value Profile="(Default)">MarkupLine</Value>
     </Setting>
-    <Setting Name="MarkupNonTable" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MarkupNonTable</Value>
+    <Setting Name="MarkArea" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarkupArea</Value>
     </Setting>
-    <Setting Name="MarkupShapesCount" Type="System.Int32" Scope="User">
+    <Setting Name="ShapesCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="MarkupDatasetAnnotatedPath" Type="System.String" Scope="User">
+    <Setting Name="DatasetAnnotatedPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Dataset\Annotated\</Value>
     </Setting>
-    <Setting Name="MarkupDatasetENUESPath" Type="System.String" Scope="User">
+    <Setting Name="DatasetEUESPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\Dataset\ENUSE\</Value>
     </Setting>
-    <Setting Name="MarkupDrawTableInterval" Type="System.Single" Scope="Application">
+    <Setting Name="DrawTableInterval" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="MarkupDrawNonTableInterval" Type="System.Single" Scope="Application">
+    <Setting Name="DrawMarkAreaInterval" Type="System.Single" Scope="Application">
       <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="non" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

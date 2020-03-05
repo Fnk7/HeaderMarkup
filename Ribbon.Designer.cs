@@ -40,11 +40,17 @@
             this.checkBoxSaveMarkFile = this.Factory.CreateRibbonCheckBox();
             this.checkBoxSaveMarkProperty = this.Factory.CreateRibbonCheckBox();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.buttonSaveToDataset = this.Factory.CreateRibbonButton();
             this.groupAnnotation = this.Factory.CreateRibbonGroup();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.labelTitleLike = this.Factory.CreateRibbonLabel();
+            this.labelDataLike = this.Factory.CreateRibbonLabel();
+            this.buttonSaveToDataset = this.Factory.CreateRibbonButton();
             this.buttonMarkTable = this.Factory.CreateRibbonButton();
             this.buttonMarkHeader = this.Factory.CreateRibbonButton();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.buttonTitleQuiteLike = this.Factory.CreateRibbonButton();
+            this.buttonTitleLittleLike = this.Factory.CreateRibbonButton();
+            this.buttonDataQuiteLike = this.Factory.CreateRibbonButton();
+            this.buttonDataLittleLike = this.Factory.CreateRibbonButton();
             this.buttonEraseShapes = this.Factory.CreateRibbonButton();
             this.buttonRedrawShapes = this.Factory.CreateRibbonButton();
             this.buttonReset = this.Factory.CreateRibbonButton();
@@ -92,6 +98,37 @@
             // 
             this.separator1.Name = "separator1";
             // 
+            // groupAnnotation
+            // 
+            this.groupAnnotation.Items.Add(this.buttonMarkTable);
+            this.groupAnnotation.Items.Add(this.buttonMarkHeader);
+            this.groupAnnotation.Items.Add(this.buttonTitleQuiteLike);
+            this.groupAnnotation.Items.Add(this.buttonTitleLittleLike);
+            this.groupAnnotation.Items.Add(this.labelTitleLike);
+            this.groupAnnotation.Items.Add(this.buttonDataQuiteLike);
+            this.groupAnnotation.Items.Add(this.buttonDataLittleLike);
+            this.groupAnnotation.Items.Add(this.labelDataLike);
+            this.groupAnnotation.Items.Add(this.separator2);
+            this.groupAnnotation.Items.Add(this.buttonEraseShapes);
+            this.groupAnnotation.Items.Add(this.buttonRedrawShapes);
+            this.groupAnnotation.Items.Add(this.buttonReset);
+            this.groupAnnotation.Label = "Annotation";
+            this.groupAnnotation.Name = "groupAnnotation";
+            // 
+            // separator2
+            // 
+            this.separator2.Name = "separator2";
+            // 
+            // labelTitleLike
+            // 
+            this.labelTitleLike.Label = "Title Like";
+            this.labelTitleLike.Name = "labelTitleLike";
+            // 
+            // labelDataLike
+            // 
+            this.labelDataLike.Label = "Data Like";
+            this.labelDataLike.Name = "labelDataLike";
+            // 
             // buttonSaveToDataset
             // 
             this.buttonSaveToDataset.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -100,17 +137,6 @@
             this.buttonSaveToDataset.Name = "buttonSaveToDataset";
             this.buttonSaveToDataset.ShowImage = true;
             this.buttonSaveToDataset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveToDataset_Click);
-            // 
-            // groupAnnotation
-            // 
-            this.groupAnnotation.Items.Add(this.buttonMarkTable);
-            this.groupAnnotation.Items.Add(this.buttonMarkHeader);
-            this.groupAnnotation.Items.Add(this.separator2);
-            this.groupAnnotation.Items.Add(this.buttonEraseShapes);
-            this.groupAnnotation.Items.Add(this.buttonRedrawShapes);
-            this.groupAnnotation.Items.Add(this.buttonReset);
-            this.groupAnnotation.Label = "Annotation";
-            this.groupAnnotation.Name = "groupAnnotation";
             // 
             // buttonMarkTable
             // 
@@ -130,9 +156,37 @@
             this.buttonMarkHeader.ShowImage = true;
             this.buttonMarkHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
-            // separator2
+            // buttonTitleQuiteLike
             // 
-            this.separator2.Name = "separator2";
+            this.buttonTitleQuiteLike.Image = global::HeaderMarkup.Properties.Resources.Quite;
+            this.buttonTitleQuiteLike.Label = "Quite";
+            this.buttonTitleQuiteLike.Name = "buttonTitleQuiteLike";
+            this.buttonTitleQuiteLike.ShowImage = true;
+            this.buttonTitleQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTitleQuiteLike_Click);
+            // 
+            // buttonTitleLittleLike
+            // 
+            this.buttonTitleLittleLike.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.buttonTitleLittleLike.Label = "Little";
+            this.buttonTitleLittleLike.Name = "buttonTitleLittleLike";
+            this.buttonTitleLittleLike.ShowImage = true;
+            this.buttonTitleLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTitleLittleLike_Click);
+            // 
+            // buttonDataQuiteLike
+            // 
+            this.buttonDataQuiteLike.Image = global::HeaderMarkup.Properties.Resources.Quite;
+            this.buttonDataQuiteLike.Label = "Quite";
+            this.buttonDataQuiteLike.Name = "buttonDataQuiteLike";
+            this.buttonDataQuiteLike.ShowImage = true;
+            this.buttonDataQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDataQuiteLike_Click);
+            // 
+            // buttonDataLittleLike
+            // 
+            this.buttonDataLittleLike.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.buttonDataLittleLike.Label = "Little";
+            this.buttonDataLittleLike.Name = "buttonDataLittleLike";
+            this.buttonDataLittleLike.ShowImage = true;
+            this.buttonDataLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDataLittleLike_Click);
             // 
             // buttonEraseShapes
             // 
@@ -190,6 +244,12 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonEraseShapes;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonRedrawShapes;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonReset;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleQuiteLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleLittleLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelTitleLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDataQuiteLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDataLittleLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelDataLike;
     }
 
     partial class ThisRibbonCollection
