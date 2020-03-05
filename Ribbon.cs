@@ -23,15 +23,15 @@ namespace HeaderMarkup
         {
             try
             {
-                
+
                 Excel.Workbook workbook = Globals.ThisAddIn.Application.ActiveWorkbook;
                 string markup = Markups.markups.SaveMarkup(workbook, checkBoxSaveShapes.Checked, checkBoxSaveMarkProperty.Checked);
                 string annotatedPath = Properties.Settings.Default.DatasetAnnotatedPath, name = workbook.Name, xlsx = ".xlsx", range = ".range";
-                if (!Directory.Exists(annotatedPath)) 
+                if (!Directory.Exists(annotatedPath))
                     Directory.CreateDirectory(annotatedPath);
-                if(!string.IsNullOrEmpty(workbook.Path) && name.Contains('.'))
+                if (!string.IsNullOrEmpty(workbook.Path) && name.Contains('.'))
                     name = Path.GetFileNameWithoutExtension(workbook.FullName);
-                if (File.Exists(Path.Combine(annotatedPath + name + xlsx)))
+                if (File.Exists(Path.Combine(annotatedPath, name + xlsx)))
                     if (string.Equals(Path.Combine(annotatedPath, name + xlsx), workbook.FullName, StringComparison.InvariantCultureIgnoreCase))
                         workbook.Save();
                     else
@@ -39,13 +39,15 @@ namespace HeaderMarkup
                         DialogResult dialogResult = MessageBox.Show("已有" + name + xlsx + "标注文件，是否替换？", "替换文件", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
                         if (dialogResult == DialogResult.OK)
                         {
-                            File.Delete(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath + name + xlsx));
-                            File.Delete(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath + name + range));
+                            File.Delete(Path.Combine(annotatedPath + name + xlsx));
+                            File.Delete(Path.Combine(annotatedPath + name + range));
                         }
                         else return;
-                        workbook.SaveAs(Filename: Properties.Settings.Default.DatasetAnnotatedPath + name + xlsx, FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
+                        workbook.SaveAs(Filename: annotatedPath + name + xlsx, FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
                     }
-                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(Properties.Settings.Default.DatasetAnnotatedPath, name + range)))
+                else
+                    workbook.SaveAs(Filename: annotatedPath + name + xlsx, FileFormat: Excel.XlFileFormat.xlOpenXMLWorkbook);
+                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(annotatedPath, name + range)))
                     streamWriter.Write(markup);
                 Markups.markups.Remove(workbook);
                 workbook.Close();
