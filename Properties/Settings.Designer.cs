@@ -34,16 +34,16 @@ namespace HeaderMarkup.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkupTableLine_")]
-        public string MarkupTableLine {
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkupEdge")]
+        public string MarkupTableEdge {
             get {
-                return ((string)(this["MarkupTableLine"]));
+                return ((string)(this["MarkupTableEdge"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkupTable_")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkupTable")]
         public string MarkupTable {
             get {
                 return ((string)(this["MarkupTable"]));
@@ -52,19 +52,19 @@ namespace HeaderMarkup.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkupHeaderLine_")]
-        public string MarkupHeaderLine {
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkupLine")]
+        public string MarkupNonTableLine {
             get {
-                return ((string)(this["MarkupHeaderLine"]));
+                return ((string)(this["MarkupNonTableLine"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MarkupHeader_")]
-        public string MarkupHeader {
+        [global::System.Configuration.DefaultSettingValueAttribute("MarkupNonTable")]
+        public string MarkupNonTable {
             get {
-                return ((string)(this["MarkupHeader"]));
+                return ((string)(this["MarkupNonTable"]));
             }
         }
         
@@ -101,6 +101,24 @@ namespace HeaderMarkup.Properties {
             }
             set {
                 this["MarkupDatasetENUESPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public float MarkupDrawTableInterval {
+            get {
+                return ((float)(this["MarkupDrawTableInterval"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public float MarkupDrawNonTableInterval {
+            get {
+                return ((float)(this["MarkupDrawNonTableInterval"]));
             }
         }
     }
