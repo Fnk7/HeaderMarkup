@@ -65,13 +65,8 @@ namespace HeaderMarkup
             return range;
         }
 
+        // 标记表
         private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
-
-        private void buttonEraseShapes_Click(object sender, RibbonControlEventArgs e) => Markups.markups.EraseShapes(Globals.ThisAddIn.Application.ActiveWorkbook.ActiveSheet);
-
-        private void buttonRedrawShapes_Click(object sender, RibbonControlEventArgs e) => Markups.markups.RedrawShapes(Globals.ThisAddIn.Application.ActiveWorkbook);
-
-        private void buttonReset_Click(object sender, RibbonControlEventArgs e) => Markups.markups.Reset(Globals.ThisAddIn.Application.ActiveWorkbook);
 
         // 标记区域
         private void buttonTitleQuiteLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), -2);
@@ -79,5 +74,11 @@ namespace HeaderMarkup
         private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 0);
         private void buttonDataLittleLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 1);
         private void buttonDataQuiteLike_Click(object sender, RibbonControlEventArgs e) => Markups.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 2);
+
+        // 删除操作
+        private void buttonDeleteAll_Click(object sender, RibbonControlEventArgs e) => Markups.markups.DeleteAll(Globals.ThisAddIn.Application.ActiveWorkbook);
+        private void buttonDeleteArea_Click(object sender, RibbonControlEventArgs e) => Markups.markups.DeleteArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
+        private void buttonDeleteTable_Click(object sender, RibbonControlEventArgs e) => Markups.markups.DeleteTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
+
     }
 }

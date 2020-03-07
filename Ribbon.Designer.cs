@@ -40,20 +40,20 @@
             this.checkBoxSaveMarkFile = this.Factory.CreateRibbonCheckBox();
             this.checkBoxSaveMarkProperty = this.Factory.CreateRibbonCheckBox();
             this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.groupAnnotation = this.Factory.CreateRibbonGroup();
-            this.separator2 = this.Factory.CreateRibbonSeparator();
-            this.labelTitleLike = this.Factory.CreateRibbonLabel();
-            this.labelDataLike = this.Factory.CreateRibbonLabel();
             this.buttonSaveToDataset = this.Factory.CreateRibbonButton();
+            this.groupAnnotation = this.Factory.CreateRibbonGroup();
             this.buttonMarkTable = this.Factory.CreateRibbonButton();
             this.buttonMarkHeader = this.Factory.CreateRibbonButton();
             this.buttonTitleQuiteLike = this.Factory.CreateRibbonButton();
             this.buttonTitleLittleLike = this.Factory.CreateRibbonButton();
+            this.labelTitleLike = this.Factory.CreateRibbonLabel();
             this.buttonDataQuiteLike = this.Factory.CreateRibbonButton();
             this.buttonDataLittleLike = this.Factory.CreateRibbonButton();
-            this.buttonEraseShapes = this.Factory.CreateRibbonButton();
-            this.buttonRedrawShapes = this.Factory.CreateRibbonButton();
-            this.buttonReset = this.Factory.CreateRibbonButton();
+            this.labelDataLike = this.Factory.CreateRibbonLabel();
+            this.separator2 = this.Factory.CreateRibbonSeparator();
+            this.buttonDeleteAll = this.Factory.CreateRibbonButton();
+            this.buttonDeleteArea = this.Factory.CreateRibbonButton();
+            this.buttonDeleteTable = this.Factory.CreateRibbonButton();
             this.tabHMarkup.SuspendLayout();
             this.groupSave.SuspendLayout();
             this.groupAnnotation.SuspendLayout();
@@ -98,6 +98,15 @@
             // 
             this.separator1.Name = "separator1";
             // 
+            // buttonSaveToDataset
+            // 
+            this.buttonSaveToDataset.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.buttonSaveToDataset.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
+            this.buttonSaveToDataset.Label = "Save to Dataset";
+            this.buttonSaveToDataset.Name = "buttonSaveToDataset";
+            this.buttonSaveToDataset.ShowImage = true;
+            this.buttonSaveToDataset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveToDataset_Click);
+            // 
             // groupAnnotation
             // 
             this.groupAnnotation.Items.Add(this.buttonMarkTable);
@@ -109,34 +118,11 @@
             this.groupAnnotation.Items.Add(this.buttonDataLittleLike);
             this.groupAnnotation.Items.Add(this.labelDataLike);
             this.groupAnnotation.Items.Add(this.separator2);
-            this.groupAnnotation.Items.Add(this.buttonEraseShapes);
-            this.groupAnnotation.Items.Add(this.buttonRedrawShapes);
-            this.groupAnnotation.Items.Add(this.buttonReset);
+            this.groupAnnotation.Items.Add(this.buttonDeleteAll);
+            this.groupAnnotation.Items.Add(this.buttonDeleteArea);
+            this.groupAnnotation.Items.Add(this.buttonDeleteTable);
             this.groupAnnotation.Label = "Annotation";
             this.groupAnnotation.Name = "groupAnnotation";
-            // 
-            // separator2
-            // 
-            this.separator2.Name = "separator2";
-            // 
-            // labelTitleLike
-            // 
-            this.labelTitleLike.Label = "Title Like";
-            this.labelTitleLike.Name = "labelTitleLike";
-            // 
-            // labelDataLike
-            // 
-            this.labelDataLike.Label = "Data Like";
-            this.labelDataLike.Name = "labelDataLike";
-            // 
-            // buttonSaveToDataset
-            // 
-            this.buttonSaveToDataset.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.buttonSaveToDataset.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
-            this.buttonSaveToDataset.Label = "Save to Dataset";
-            this.buttonSaveToDataset.Name = "buttonSaveToDataset";
-            this.buttonSaveToDataset.ShowImage = true;
-            this.buttonSaveToDataset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveToDataset_Click);
             // 
             // buttonMarkTable
             // 
@@ -172,6 +158,11 @@
             this.buttonTitleLittleLike.ShowImage = true;
             this.buttonTitleLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTitleLittleLike_Click);
             // 
+            // labelTitleLike
+            // 
+            this.labelTitleLike.Label = "Title Like";
+            this.labelTitleLike.Name = "labelTitleLike";
+            // 
             // buttonDataQuiteLike
             // 
             this.buttonDataQuiteLike.Image = global::HeaderMarkup.Properties.Resources.Quite;
@@ -188,29 +179,38 @@
             this.buttonDataLittleLike.ShowImage = true;
             this.buttonDataLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDataLittleLike_Click);
             // 
-            // buttonEraseShapes
+            // labelDataLike
             // 
-            this.buttonEraseShapes.Image = global::HeaderMarkup.Properties.Resources.Erase;
-            this.buttonEraseShapes.Label = "Erase";
-            this.buttonEraseShapes.Name = "buttonEraseShapes";
-            this.buttonEraseShapes.ShowImage = true;
-            this.buttonEraseShapes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonEraseShapes_Click);
+            this.labelDataLike.Label = "Data Like";
+            this.labelDataLike.Name = "labelDataLike";
             // 
-            // buttonRedrawShapes
+            // separator2
             // 
-            this.buttonRedrawShapes.Image = global::HeaderMarkup.Properties.Resources.Redraw;
-            this.buttonRedrawShapes.Label = "Redraw";
-            this.buttonRedrawShapes.Name = "buttonRedrawShapes";
-            this.buttonRedrawShapes.ShowImage = true;
-            this.buttonRedrawShapes.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonRedrawShapes_Click);
+            this.separator2.Name = "separator2";
             // 
-            // buttonReset
+            // buttonDeleteAll
             // 
-            this.buttonReset.Image = global::HeaderMarkup.Properties.Resources.Reset;
-            this.buttonReset.Label = "Reset";
-            this.buttonReset.Name = "buttonReset";
-            this.buttonReset.ShowImage = true;
-            this.buttonReset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonReset_Click);
+            this.buttonDeleteAll.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteAll.Label = "Delete All";
+            this.buttonDeleteAll.Name = "buttonDeleteAll";
+            this.buttonDeleteAll.ShowImage = true;
+            this.buttonDeleteAll.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteAll_Click);
+            // 
+            // buttonDeleteArea
+            // 
+            this.buttonDeleteArea.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteArea.Label = "Delete Area";
+            this.buttonDeleteArea.Name = "buttonDeleteArea";
+            this.buttonDeleteArea.ShowImage = true;
+            this.buttonDeleteArea.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteArea_Click);
+            // 
+            // buttonDeleteTable
+            // 
+            this.buttonDeleteTable.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteTable.Label = "Delete Table";
+            this.buttonDeleteTable.Name = "buttonDeleteTable";
+            this.buttonDeleteTable.ShowImage = true;
+            this.buttonDeleteTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteTable_Click);
             // 
             // Ribbon
             // 
@@ -241,15 +241,15 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSaveToDataset;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonEraseShapes;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonRedrawShapes;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonReset;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleQuiteLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleLittleLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelTitleLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDataQuiteLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDataLittleLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelDataLike;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteAll;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteArea;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteTable;
     }
 
     partial class ThisRibbonCollection

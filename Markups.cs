@@ -77,6 +77,12 @@ namespace HeaderMarkup
 
         #endregion
 
+        public static RectArea GetRectArea(Excel.Range range)
+        {
+            if (!RectArea.LegalRange(range)) return null;
+            return new RectArea(range.Address);
+        }
+
         public bool IsOverlap(RectArea area) => !((this.left > area.right) || (this.right < area.left) || (this.top > area.bottom) || (this.bottom < area.top));
 
         public bool IsInside(RectArea area) => (this.left >= area.left) && (this.top >= area.top) && (this.right <= area.right) && (this.bottom <= area.bottom);
@@ -125,6 +131,9 @@ namespace HeaderMarkup
         private Markups() => books = new Dictionary<string, Book>();
 
         private Dictionary<string, Book> books;
+
+
+        #region 标注
 
         private Sheet GetSheet(Excel.Workbook workbook)
         {
@@ -181,7 +190,11 @@ namespace HeaderMarkup
             DrawMarkArea(range, type);
         }
 
-        public void EraseShapes(Excel.Worksheet worksheet)
+        #endregion
+
+        #region 删除
+
+        private void EraseShapes(Excel.Worksheet worksheet)
         {
             try
             {
@@ -197,7 +210,7 @@ namespace HeaderMarkup
             }
         }
 
-        public void RedrawShapes(Excel.Workbook workbook)
+        private void RedrawShapes(Excel.Workbook workbook)
         {
             try
             {
@@ -214,6 +227,8 @@ namespace HeaderMarkup
                         foreach (var markArea in table.MarkAreas)
                             DrawMarkArea(worksheet.Range[markArea.Address], markArea.Type);
                     }
+                    else
+                        DrawMarkArea(worksheet.Range[rectArea.Address], ((MarkArea)rectArea).Type);
                 }
             }
             catch (Exception ex)
@@ -222,7 +237,7 @@ namespace HeaderMarkup
             }
         }
 
-        public void Reset(Excel.Workbook workbook)
+        public void DeleteAll(Excel.Workbook workbook)
         {
             try
             {
@@ -237,6 +252,61 @@ namespace HeaderMarkup
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        public void DeleteArea(Excel.Workbook workbook, Excel.Range range)
+        {
+            RectArea rectArea = RectArea.GetRectArea(range);
+            Sheet sheet = GetSheet(workbook);
+            if (rectArea == null || sheet == null) return;
+            RectArea rectTemp = null;
+            foreach (var rect in sheet)
+            {
+                if (rect is Table)
+                {
+                    MarkArea markTemp = null;
+                    foreach (var mark in ((Table)rect).MarkAreas)
+                        if (rectArea.IsInside(mark))
+                        {
+                            markTemp = mark;
+                            break;
+                        }
+                    if (markTemp != null)
+                    {
+                        ((Table)rect).MarkAreas.Remove(markTemp);
+                        break;
+                    }
+                }
+                else if (rectArea.IsInside(rect))
+                {
+                    rectTemp = rect;
+                    break;
+                }
+            }
+            if (rectTemp != null)
+                sheet.Remove(rectTemp);
+            RedrawShapes(workbook);
+        }
+
+        public void DeleteTable(Excel.Workbook workbook, Excel.Range range)
+        {
+            RectArea rectArea = RectArea.GetRectArea(range);
+            Sheet sheet = GetSheet(workbook);
+            if (rectArea == null || sheet == null) return;
+            RectArea table = null;
+            foreach (var rect in sheet)
+                if (rect is Table && rectArea.IsInside(rect))
+                {
+                    table = rect;
+                    break;
+                }
+            if (table != null)
+                sheet.Remove(table);
+            RedrawShapes(workbook);
+        }
+
+        #endregion
+
+        #region 保存
 
         private string GenString(Excel.Workbook workbook)
         {
@@ -271,6 +341,8 @@ namespace HeaderMarkup
         }
 
         public void Remove(Excel.Workbook workbook) => books.Remove(workbook.Name);
+
+        #endregion
 
         #region 画图
         // Line.ForeColor.RGB 和 color.TOArgb红蓝位置相反
