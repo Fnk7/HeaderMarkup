@@ -36,11 +36,8 @@
         {
             this.tabHMarkup = this.Factory.CreateRibbonTab();
             this.groupSave = this.Factory.CreateRibbonGroup();
-            this.checkBoxSaveShapes = this.Factory.CreateRibbonCheckBox();
-            this.checkBoxSaveMarkFile = this.Factory.CreateRibbonCheckBox();
-            this.checkBoxSaveMarkProperty = this.Factory.CreateRibbonCheckBox();
-            this.separator1 = this.Factory.CreateRibbonSeparator();
-            this.buttonSaveToDataset = this.Factory.CreateRibbonButton();
+            this.buttonSaveMarkup = this.Factory.CreateRibbonButton();
+            this.buttonLoadMarkup = this.Factory.CreateRibbonButton();
             this.groupAnnotation = this.Factory.CreateRibbonGroup();
             this.buttonMarkTable = this.Factory.CreateRibbonButton();
             this.buttonMarkHeader = this.Factory.CreateRibbonButton();
@@ -54,58 +51,53 @@
             this.buttonDeleteAll = this.Factory.CreateRibbonButton();
             this.buttonDeleteArea = this.Factory.CreateRibbonButton();
             this.buttonDeleteTable = this.Factory.CreateRibbonButton();
+            this.group1 = this.Factory.CreateRibbonGroup();
+            this.buttonGenerateCSV = this.Factory.CreateRibbonButton();
+            this.buttonTrain = this.Factory.CreateRibbonButton();
+            this.buttonPredict = this.Factory.CreateRibbonButton();
+            this.groupSettings = this.Factory.CreateRibbonGroup();
+            this.buttonSettings = this.Factory.CreateRibbonButton();
             this.tabHMarkup.SuspendLayout();
             this.groupSave.SuspendLayout();
             this.groupAnnotation.SuspendLayout();
+            this.group1.SuspendLayout();
+            this.groupSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabHMarkup
             // 
             this.tabHMarkup.Groups.Add(this.groupSave);
             this.tabHMarkup.Groups.Add(this.groupAnnotation);
+            this.tabHMarkup.Groups.Add(this.group1);
+            this.tabHMarkup.Groups.Add(this.groupSettings);
             this.tabHMarkup.Label = "HMarkup";
             this.tabHMarkup.Name = "tabHMarkup";
             this.tabHMarkup.Position = this.Factory.RibbonPosition.AfterOfficeId("TabInsert");
             // 
             // groupSave
             // 
-            this.groupSave.Items.Add(this.checkBoxSaveShapes);
-            this.groupSave.Items.Add(this.checkBoxSaveMarkFile);
-            this.groupSave.Items.Add(this.checkBoxSaveMarkProperty);
-            this.groupSave.Items.Add(this.separator1);
-            this.groupSave.Items.Add(this.buttonSaveToDataset);
-            this.groupSave.Label = "Save";
+            this.groupSave.Items.Add(this.buttonSaveMarkup);
+            this.groupSave.Items.Add(this.buttonLoadMarkup);
+            this.groupSave.Label = "Save Load";
             this.groupSave.Name = "groupSave";
             // 
-            // checkBoxSaveShapes
+            // buttonSaveMarkup
             // 
-            this.checkBoxSaveShapes.Label = "Save Shapes";
-            this.checkBoxSaveShapes.Name = "checkBoxSaveShapes";
+            this.buttonSaveMarkup.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.buttonSaveMarkup.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
+            this.buttonSaveMarkup.Label = "Save Markup";
+            this.buttonSaveMarkup.Name = "buttonSaveMarkup";
+            this.buttonSaveMarkup.ShowImage = true;
+            this.buttonSaveMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveMarkup_Click);
             // 
-            // checkBoxSaveMarkFile
+            // buttonLoadMarkup
             // 
-            this.checkBoxSaveMarkFile.Checked = true;
-            this.checkBoxSaveMarkFile.Label = "Save MarkFile";
-            this.checkBoxSaveMarkFile.Name = "checkBoxSaveMarkFile";
-            // 
-            // checkBoxSaveMarkProperty
-            // 
-            this.checkBoxSaveMarkProperty.Checked = true;
-            this.checkBoxSaveMarkProperty.Label = "Save MarkProp";
-            this.checkBoxSaveMarkProperty.Name = "checkBoxSaveMarkProperty";
-            // 
-            // separator1
-            // 
-            this.separator1.Name = "separator1";
-            // 
-            // buttonSaveToDataset
-            // 
-            this.buttonSaveToDataset.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.buttonSaveToDataset.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
-            this.buttonSaveToDataset.Label = "Save to Dataset";
-            this.buttonSaveToDataset.Name = "buttonSaveToDataset";
-            this.buttonSaveToDataset.ShowImage = true;
-            this.buttonSaveToDataset.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSaveToDataset_Click);
+            this.buttonLoadMarkup.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.buttonLoadMarkup.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
+            this.buttonLoadMarkup.Label = "Load Markup";
+            this.buttonLoadMarkup.Name = "buttonLoadMarkup";
+            this.buttonLoadMarkup.ShowImage = true;
+            this.buttonLoadMarkup.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonLoadMarkup_Click);
             // 
             // groupAnnotation
             // 
@@ -212,6 +204,52 @@
             this.buttonDeleteTable.ShowImage = true;
             this.buttonDeleteTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteTable_Click);
             // 
+            // group1
+            // 
+            this.group1.Items.Add(this.buttonGenerateCSV);
+            this.group1.Items.Add(this.buttonTrain);
+            this.group1.Items.Add(this.buttonPredict);
+            this.group1.Label = "Predict";
+            this.group1.Name = "group1";
+            // 
+            // buttonGenerateCSV
+            // 
+            this.buttonGenerateCSV.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonGenerateCSV.Label = "Generate CSV";
+            this.buttonGenerateCSV.Name = "buttonGenerateCSV";
+            this.buttonGenerateCSV.ShowImage = true;
+            this.buttonGenerateCSV.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonGenerateCSV_Click);
+            // 
+            // buttonTrain
+            // 
+            this.buttonTrain.Image = global::HeaderMarkup.Properties.Resources.Erase;
+            this.buttonTrain.Label = "Train Model";
+            this.buttonTrain.Name = "buttonTrain";
+            this.buttonTrain.ShowImage = true;
+            this.buttonTrain.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTrain_Click);
+            // 
+            // buttonPredict
+            // 
+            this.buttonPredict.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.buttonPredict.Label = "Predict Header";
+            this.buttonPredict.Name = "buttonPredict";
+            this.buttonPredict.ShowImage = true;
+            this.buttonPredict.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonPredict_Click);
+            // 
+            // groupSettings
+            // 
+            this.groupSettings.Items.Add(this.buttonSettings);
+            this.groupSettings.Label = "Settings";
+            this.groupSettings.Name = "groupSettings";
+            // 
+            // buttonSettings
+            // 
+            this.buttonSettings.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.buttonSettings.Label = "Settings";
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.ShowImage = true;
+            this.buttonSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonSettings_Click);
+            // 
             // Ribbon
             // 
             this.Name = "Ribbon";
@@ -224,6 +262,10 @@
             this.groupSave.PerformLayout();
             this.groupAnnotation.ResumeLayout(false);
             this.groupAnnotation.PerformLayout();
+            this.group1.ResumeLayout(false);
+            this.group1.PerformLayout();
+            this.groupSettings.ResumeLayout(false);
+            this.groupSettings.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -235,11 +277,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSave;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonMarkTable;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonMarkHeader;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveShapes;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveMarkFile;
-        internal Microsoft.Office.Tools.Ribbon.RibbonCheckBox checkBoxSaveMarkProperty;
-        internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSaveToDataset;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSaveMarkup;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleQuiteLike;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTitleLittleLike;
@@ -250,6 +288,13 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteAll;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteArea;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonDeleteTable;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonSettings;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonLoadMarkup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSettings;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonTrain;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonPredict;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton buttonGenerateCSV;
     }
 
     partial class ThisRibbonCollection
