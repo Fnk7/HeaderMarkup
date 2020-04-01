@@ -13,6 +13,9 @@ namespace HeaderMarkup.Markup
             headers = new List<MarkHeader>();
         }
 
+        public override string Name
+            => $"[Tb,{left},{top},{right},{bottom}]";
+
         public override string ToString()
             => $"[Tb,{headers.Count},{left},{top},{right},{bottom}]"
             + $"{string.Concat(headers)}";

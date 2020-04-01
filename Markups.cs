@@ -9,6 +9,8 @@ using Microsoft.Office.Tools.Excel;
 
 using System.Windows.Forms;
 
+using HeaderMarkup.DrawShape;
+
 namespace HeaderMarkup
 {
     using Sheet = List<RectArea>;
@@ -160,7 +162,8 @@ namespace HeaderMarkup
             foreach (var rectArea in sheet)
                 if (rectArea is Table && table.IsOverlap(rectArea)) return;
             sheet.Add(table);
-            DrawTable(range);
+            //MarkupsDrawTable(range);
+            //DrawTable.Draw(range, table.ToString());
         }
 
         public void AddMarkArea(Excel.Workbook workbook, Excel.Range range, int type)
@@ -187,7 +190,8 @@ namespace HeaderMarkup
             else if (table == null) return;
             else
                 table.AddMarkArea(markArea);
-            DrawMarkArea(range, type);
+            //DrawMarkArea(range, type);
+            //DrawHeader.Draw(range, type, markArea.ToString());
         }
 
         #endregion
@@ -200,7 +204,7 @@ namespace HeaderMarkup
             {
                 foreach (Excel.Shape shape in worksheet.Shapes)
                 {
-                    if (shape.Name.Contains(Share.settings.TableShapeName) || shape.Name.Contains(Share.settings.MarkAreaName))
+                    if (shape.Name.Contains(Share.settings.TableShapeName) || shape.Name.Contains(Share.settings.HeaderShapeName))
                         shape.Delete();
                 }
             }
@@ -223,12 +227,12 @@ namespace HeaderMarkup
                     if (rectArea is Table)
                     {
                         Table table = (Table)rectArea;
-                        DrawTable(worksheet.Range[table.Address]);
+                        DrawTable.Draw(worksheet.Range[table.Address], table.ToString());
                         foreach (var markArea in table.MarkAreas)
-                            DrawMarkArea(worksheet.Range[markArea.Address], markArea.Type);
+                            DrawHeader.Draw(worksheet.Range[markArea.Address], markArea.Type, markArea.ToString());
                     }
                     else
-                        DrawMarkArea(worksheet.Range[rectArea.Address], ((MarkArea)rectArea).Type);
+                        DrawHeader.Draw(worksheet.Range[rectArea.Address], ((MarkArea)rectArea).Type, rectArea.ToString());
                 }
             }
             catch (Exception ex)
@@ -339,8 +343,6 @@ namespace HeaderMarkup
         #endregion
 
         #region 画图
-        // Line.ForeColor.RGB 和 color.TOArgb红蓝位置相反
-        private static int RGBColor(System.Drawing.Color color) => color.B * 0x10000 + color.G * 0x100 + color.R;
 
         // Table的一条边界
         private static float[,] TableEdge(double x1, double y1, double x2, double y2)
@@ -370,7 +372,7 @@ namespace HeaderMarkup
         }
 
         // 画出table
-        private static void DrawTable(Excel.Range range)
+        private static void MarkupsDrawTable(Excel.Range range)
         {
             Excel.Worksheet worksheet = range.Worksheet;
             double left = range.Left, top = range.Top, width = range.Width, height = range.Height;
@@ -383,8 +385,8 @@ namespace HeaderMarkup
                 shapes[i] = edge.Name;
             }
             Excel.Shape shape = worksheet.Shapes.Range[shapes].Group();
-            shape.Line.Weight = 2.0f;
-            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.Blue);
+            shape.Line.Weight = 1.5f;
+            shape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.Blue);
             shape.Name = Share.settings.TableShapeName + Share.settings.ShapeCount.ToString();
             Share.settings.ShapeCount++;
         }
@@ -403,8 +405,8 @@ namespace HeaderMarkup
         private static void DrawMarkArea(Excel.Range range, int type)
         {
             Excel.Worksheet worksheet = range.Worksheet;
-            double left = range.Left, top = range.Top, width = range.Width, height = range.Height;
-            float interval = Share.settings.MarkInterval;
+            float left = (float)range.Left, top = (float)range.Top, width = (float)range.Width, height = (float)range.Height;
+            float interval = Share.settings.HeaderInterval;
             int start = (int)((left + top) / interval) + 1, end = (int)((left + top + height + width) / interval);
             object[] lines = new object[end - start + 1];
             Point point1 = new Point(), point2 = new Point();
@@ -419,13 +421,13 @@ namespace HeaderMarkup
                 else
                     point2.SetPoint(interval * i - top - height, top + height);
                 var line = worksheet.Shapes.AddLine(point1.x, point1.y, point2.x, point2.y);
-                line.Name = Share.settings.MarkLineName + Share.settings.ShapeCount.ToString() + "-" + i.ToString();
+                line.Name = Share.settings.HeaderLineName + Share.settings.ShapeCount.ToString() + "-" + i.ToString();
                 lines[i - start] = line.Name;
             }
             Excel.Shape shape = worksheet.Shapes.Range[lines].Group();
-            shape.Name = Share.settings.MarkAreaName + Share.settings.ShapeCount.ToString();
+            shape.Name = Share.settings.HeaderShapeName + Share.settings.ShapeCount.ToString();
             shape.Line.Weight = 1.5f;
-            shape.Line.ForeColor.RGB = RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
+            shape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
             Share.settings.ShapeCount++;
         }
 

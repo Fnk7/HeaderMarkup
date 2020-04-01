@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using HeaderMarkup.Markup;
+using HeaderMarkup.DrawShape;
 
 namespace HeaderMarkup
 {
@@ -17,37 +18,35 @@ namespace HeaderMarkup
         }
 
         private static readonly string xlsx = ".xlsx";
+        private static readonly string mark = ".mark";
         private static readonly string range = ".range";
 
         // 保存 TODO
         private void buttonSaveMarkup_Click(object sender, RibbonControlEventArgs e)
         {
+            var dataset = Share.settings.MarkupDateset;
             try
             {
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
-                string dataset = Share.settings.MarkupDateset;
-                string markup = Share.markups.MarkupInfos(workbook);
+                var markup = Share.markBookHolder.GetMarkBook(workbook).ToString();
                 if (!Directory.Exists(dataset))
                     Directory.CreateDirectory(dataset);
-                string name = workbook.Name;
-                if (File.Exists(workbook.FullName) && name.Contains('.'))
-                    name = name.Substring(0, name.LastIndexOf('.'));
-                if (File.Exists(Path.Combine(dataset, name + xlsx)))
-                    if (string.Equals(Path.Combine(dataset, name + xlsx), workbook.FullName, StringComparison.InvariantCultureIgnoreCase))
-                        workbook.Save();
-                    else if (MessageBox.Show($"Replace\t{name}{xlsx} in {dataset}？", "Replace File", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
-                            == DialogResult.OK)
-                    {
-                        File.Delete(Path.Combine(dataset + name + xlsx));
-                        File.Delete(Path.Combine(dataset + name + range));
-                        workbook.SaveCopyAs(Path.Combine(dataset, name + xlsx));
-                    }
-                    else return;
-                else
-                    workbook.SaveCopyAs(Path.Combine(dataset, name + xlsx));
-                using (StreamWriter streamWriter = new StreamWriter(Path.Combine(dataset, name + range)))
-                    streamWriter.Write(markup);
-                Share.markups.Remove(workbook);
+                string bookName = workbook.Name;
+                if (File.Exists(workbook.FullName) && bookName.Contains('.'))
+                    bookName = bookName.Substring(0, bookName.LastIndexOf('.'));
+                string bookSavePath = Path.Combine(dataset, bookName + xlsx);
+                string markSavePath = Path.Combine(dataset, bookName + mark);
+                if (!File.Exists(bookSavePath))
+                    workbook.SaveCopyAs(bookSavePath);
+                else if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
+                    workbook.Save();
+                else if (MessageBox.Show($"Replace\t{bookSavePath}？", "Replace File",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    workbook.SaveCopyAs(bookSavePath);
+                else return;
+                using (StreamWriter markWriter = new StreamWriter(markSavePath))
+                    markWriter.Write(markup);
+                Share.markBookHolder.Remove(workbook);
                 workbook.Close(false, Type.Missing, Type.Missing);
             }
             catch (Exception ex)
@@ -70,14 +69,14 @@ namespace HeaderMarkup
             {
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 Excel.Range range = Utils.GetSelectedRange();
-                Share.markups.AddTable(workbook, range);
-                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
-                sheet.AddTable(range.Address);
-            }catch(Exception ex)
+                //Share.markups.AddTable(workbook, range);
+                var name = Share.markBookHolder.GetMarkSheet().AddTable(range.Address);
+                DrawTable.Draw(range, name);
+            }
+            catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
         // 标记Header
         private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e)
@@ -95,9 +94,10 @@ namespace HeaderMarkup
                     type = 2;
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 Excel.Range range = Utils.GetSelectedRange();
-                Share.markups.AddMarkArea(workbook, range, type);
+                //Share.markups.AddMarkArea(workbook, range, type);
                 MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
-                sheet.AddHeader(range.Address, type);
+                string name = sheet.AddHeader(range.Address, type);
+                DrawHeader.Draw(range, type, name);
             }
             catch (Exception ex)
             {
@@ -114,19 +114,22 @@ namespace HeaderMarkup
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 if (e.Control.Id == buttonDeleteAll.Id)
                 {
-                    Share.markups.DeleteAll(workbook);
+                    //Share.markups.DeleteAll(workbook);
                     Share.markBookHolder.GetMarkSheet().DeletAll();
+                    EraseShape.EraseAll();
                     return;
                 }
                 Excel.Range range = Utils.GetSelectedRange();
                 if (e.Control.Id == buttonDeleteArea.Id)
                 {
-                    Share.markups.DeleteArea(workbook, range);
-                    Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
+                    //Share.markups.DeleteArea(workbook, range);
+                    var name = Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
+                    EraseShape.EraseByName(name);
                 }else if(e.Control.Id == buttonDeleteTable.Id)
                 {
-                    Share.markups.DeleteTable(workbook, range);
-                    Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
+                    //Share.markups.DeleteTable(workbook, range);
+                    var names = Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
+                    EraseShape.EraseByName(names);
                 }
             }
             catch (Exception ex)

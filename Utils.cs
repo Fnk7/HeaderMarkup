@@ -1,9 +1,25 @@
 ﻿using System;
+using Microsoft.Office.Tools;
 using Excel = Microsoft.Office.Interop.Excel;
 
+using HeaderMarkup.Setting;
+using HeaderMarkup.Markup;
 
 namespace HeaderMarkup
 {
+    static class Share
+    {
+        public static readonly string defualtDataset = "D:\\Temp\\Markup";
+        public static readonly string defualtCSV = "D:\\Temp\\CSV";
+        public static readonly string modelName = "forest.model";
+
+        public static Settings settings;
+        public static CustomTaskPane settingPanel = null;
+
+        public static Markups markups;
+        public static MarkBookHolder markBookHolder;
+    }
+
     static class Utils
     {
         public static int ParseColumn(string col)
@@ -13,6 +29,10 @@ namespace HeaderMarkup
                 temp = temp * 26 + c - 'A' + 1;
             return temp;
         }
+
+        // Line.ForeColor.RGB 和 color.TOArgb红蓝位置相反
+        public static int RGBColor(System.Drawing.Color color) => (color.B << 16) + (color.G << 8) + color.R;
+
 
         #region 获取当前实例
         public static Excel.Workbook GetActiveWorkbook()

@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Collections.Generic;
 
+
 namespace HeaderMarkup.Markup
 {
     class MarkSheet
     {
         public List<MarkRange> ranges = new List<MarkRange>();
 
-        public void AddTable(string address)
+        public string AddTable(string address)
         {
             MarkTable table = new MarkTable(address);
 
@@ -16,9 +17,10 @@ namespace HeaderMarkup.Markup
                 if (range is MarkTable && range.IsOverlap(table))
                     throw new Exception($"New Table[{address}] Overlaps Table[{range.Address}].");
             ranges.Add(table);
+            return table.Name;
         }
 
-        public void AddHeader(string address, int type)
+        public string AddHeader(string address, int type)
         {
             MarkHeader header = new MarkHeader(address, type);
             MarkTable table = null;
@@ -39,43 +41,39 @@ namespace HeaderMarkup.Markup
                 table.headers.Add(header);
             else
                 throw new Exception($"New Header[{address}] is not Inside any Table.");
-            return;
+            return header.Name;
         }
 
-        public string DeletAll()
-        {
-            var delete = string.Concat(ranges);
-            ranges.Clear();
-            return delete;
-        }
+        public void DeletAll() => ranges.Clear();
 
-        public string DeletTable(string address)
+        public List<string> DeletTable(string address)
         {
             var range = new MarkRange(address);
-            foreach (var temp in ranges.OfType<MarkTable>())
+            var toDelete = new List<string>();
+            var table = ranges.OfType<MarkTable>().FirstOrDefault(t => range.IsInside(t));
+            if (table != null)
             {
-                if (!range.IsInside(temp))
-                    continue;
-                ranges.Remove(temp);
-                return temp.ToString();
+                ranges.Remove(table);
+                toDelete.Add(table.Name);
+                toDelete = toDelete.Concat(table.headers.Select(header => header.Name)).ToList();
             }
-            return string.Empty;
+            return toDelete;
         }
 
         public string DeletHeader(string address)
         {
-            var temp = new MarkRange(address);
-            foreach (var range in ranges.Where(r => temp.IsInside(r)))
+            var range = new MarkRange(address);
+            foreach (var temp in ranges.Where(r => range.IsInside(r)))
             {
-                if (range is MarkHeader)
+                if (temp is MarkHeader)
                 {
-                    ranges.Remove(range);
-                    return range.ToString();
+                    ranges.Remove(temp);
+                    return temp.Name;
                 }
-                foreach (var header in ((MarkTable)range).headers.Where(h => temp.IsInside(h)))
+                foreach (var header in ((MarkTable)temp).headers.Where(h => range.IsInside(h)))
                 {
-                    ((MarkTable)range).headers.Remove(header);
-                    return header.ToString();
+                    ((MarkTable)temp).headers.Remove(header);
+                    return header.Name;
                 }
             }
             return string.Empty;

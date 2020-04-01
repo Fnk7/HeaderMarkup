@@ -23,7 +23,7 @@ namespace HeaderMarkup.Setting
         [Category("Mark"), DisplayName("Interval(Table)")]
         public float TableInterval { get { return _tableInterval; } set { _tableInterval = Math.Max(4f, Math.Min(value, 16f)); } }
         [Category("Mark"), DisplayName("Interval(Marks)")]
-        public float MarkInterval { get { return _markInterval; } set { _markInterval = Math.Max(4f, Math.Min(value, 16f)); } }
+        public float HeaderInterval { get { return _markInterval; } set { _markInterval = Math.Max(4f, Math.Min(value, 16f)); } }
         [Category("Mark"), DisplayName("Save Shapes")]
         public bool SaveMarkupShapes { get; set; } = false;
         [Category("Mark"), DisplayName("Save Property")]
@@ -32,12 +32,12 @@ namespace HeaderMarkup.Setting
         [Browsable(false)]
         public int MaxEdgeSize { get; set; } = 1000;
         [Browsable(false)]
-        public string TableShapeName { get; set; } = "MarkupTable:";
+        public string TableShapeName { get; set; } = "MarkupTableShape:";
         [Browsable(false)]
         public string TableEdgeName { get; set; } = "MarkupTableEdge:";
         [Browsable(false)]
-        public string MarkAreaName { get; set; } = "MarkupArea:";
+        public string HeaderShapeName { get; set; } = "MarkupHeaderShape:";
         [Browsable(false)]
-        public string MarkLineName { get; set; } = "MarkupLine:";
+        public string HeaderLineName { get; set; } = "MarkupHeaderLine:";
     }
 }

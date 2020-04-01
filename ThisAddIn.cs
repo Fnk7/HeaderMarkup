@@ -13,20 +13,6 @@ using HeaderMarkup.Markup;
 
 namespace HeaderMarkup
 {
-    static class Share
-    {
-        public static readonly string defualtDataset = "D:\\Temp\\Markup";
-        public static readonly string defualtCSV = "D:\\Temp\\CSV";
-        public static readonly string modelName = "forest.model";
-
-        public static Settings settings;
-        public static CustomTaskPane settingPanel = null;
-
-        public static Markups markups;
-        public static MarkBookHolder markBookHolder;
-    }
-
-
     public partial class ThisAddIn
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)

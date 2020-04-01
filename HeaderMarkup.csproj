@@ -159,6 +159,9 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="DrawShape\DrawHeader.cs" />
+    <Compile Include="DrawShape\DrawTable.cs" />
+    <Compile Include="DrawShape\EraseShape.cs" />
     <Compile Include="Markups.cs" />
     <Compile Include="Markup\MarkHeader.cs" />
     <Compile Include="Markup\MarkBook.cs" />

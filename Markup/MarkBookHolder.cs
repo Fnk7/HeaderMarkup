@@ -8,13 +8,14 @@ namespace HeaderMarkup.Markup
     {
         public Dictionary<string, MarkBook> markBooks = new Dictionary<string, MarkBook>();
 
-        public MarkBook GetMarkBook()
+        public MarkBook GetMarkBook(Excel.Workbook workbook)
         {
-            Excel.Workbook workbook = Utils.GetActiveWorkbook();
             if (!markBooks.ContainsKey(workbook.Name))
                 markBooks.Add(workbook.Name, new MarkBook());
             return markBooks[workbook.Name];
         }
+
+        public MarkBook GetMarkBook() => GetMarkBook(Utils.GetActiveWorkbook());
 
         public MarkSheet GetMarkSheet()
         {
@@ -27,5 +28,9 @@ namespace HeaderMarkup.Markup
                 book.markSheets.Add(worksheet.Name, new MarkSheet());
             return book.markSheets[worksheet.Name];
         }
+
+        public void Remove(Excel.Workbook workbook) => markBooks.Remove(workbook.Name);
+
+        public void Remove(string bookName) => markBooks.Remove(bookName);
     }
 }

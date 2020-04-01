@@ -31,5 +31,7 @@ namespace HeaderMarkup.Markup
         }
         public bool IsOverlap(MarkRange range) => !(left > range.right || range.left > right || top > range.bottom || range.top > bottom);
         public bool IsInside(MarkRange range) => (left >= range.left && top >= range.top && right <= range.right && bottom <= range.bottom);
+        public virtual string Name
+            => $"[R{top}C{left}:R{bottom}C{right}]";
     }
 }
