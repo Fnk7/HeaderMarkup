@@ -42,7 +42,7 @@ namespace HeaderMarkup.DrawShape
             }
             Excel.Shape headerShape = worksheet.Shapes.Range[lines].Group();
             headerShape.Name = Share.settings.HeaderShapeName + name;
-            headerShape.Line.Weight = 1.5f;
+            headerShape.Line.Weight = Share.settings.HeaderLineWeight;
             headerShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
         }
     }

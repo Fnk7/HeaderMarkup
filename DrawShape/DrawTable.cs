@@ -52,7 +52,7 @@ namespace HeaderMarkup.DrawShape
             }
             Excel.Shape tableShape = worksheet.Shapes.Range[edges].Group();
             tableShape.Name = Share.settings.TableShapeName + name;
-            tableShape.Line.Weight = 1.5f;
+            tableShape.Line.Weight = Share.settings.TableLineWeight;
             tableShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.Blue);
         }
     }

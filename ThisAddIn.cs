@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Excel = Microsoft.Office.Interop.Excel;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Excel;
-using Microsoft.Office.Tools;
-
-using HeaderMarkup.Setting;
+﻿using HeaderMarkup.Setting;
 using HeaderMarkup.Markup;
 
 namespace HeaderMarkup
@@ -18,13 +8,11 @@ namespace HeaderMarkup
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Share.settings = new Settings();
-            Share.markups = new Markups();
             Share.markBookHolder = new MarkBookHolder();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            Share.markups = null;
             Share.markBookHolder = null;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Microsoft.Office.Tools;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -16,7 +17,6 @@ namespace HeaderMarkup
         public static Settings settings;
         public static CustomTaskPane settingPanel = null;
 
-        public static Markups markups;
         public static MarkBookHolder markBookHolder;
     }
 
@@ -31,7 +31,7 @@ namespace HeaderMarkup
         }
 
         // Line.ForeColor.RGB 和 color.TOArgb红蓝位置相反
-        public static int RGBColor(System.Drawing.Color color) => (color.B << 16) + (color.G << 8) + color.R;
+        public static int RGBColor(Color color) => (color.B << 16) + (color.G << 8) + color.R;
 
 
         #region 获取当前实例

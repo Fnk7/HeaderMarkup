@@ -12,9 +12,20 @@ namespace HeaderMarkup.DrawShape
         {
             Excel.Workbook workbook = Utils.GetActiveWorkbook();
             Excel.Worksheet worksheet = Utils.GetActiveWorksheet(workbook);
+            EraseAll(worksheet);
+        }
+
+        public static void EraseAll(Excel.Worksheet worksheet)
+        {
             foreach (Excel.Shape shape in worksheet.Shapes)
                 if (shape.Name.Contains(Share.settings.TableShapeName) || shape.Name.Contains(Share.settings.HeaderShapeName))
                     shape.Delete();
+        }
+
+        public static void EraseAll(Excel.Workbook workbook)
+        {
+            foreach (var worksheet in workbook.Worksheets.OfType<Excel.Worksheet>())
+                EraseAll(worksheet);
         }
 
         public static void EraseByName(Excel.Worksheet worksheet, string name)

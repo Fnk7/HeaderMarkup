@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Office.Tools.Ribbon;
+using System.IO;
 
+using Microsoft.Office.Tools.Ribbon;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
-using System.IO;
 
 using HeaderMarkup.Markup;
 using HeaderMarkup.DrawShape;
@@ -19,9 +19,8 @@ namespace HeaderMarkup
 
         private static readonly string xlsx = ".xlsx";
         private static readonly string mark = ".mark";
-        private static readonly string range = ".range";
 
-        // 保存 TODO
+        // 保存Markup
         private void buttonSaveMarkup_Click(object sender, RibbonControlEventArgs e)
         {
             var dataset = Share.settings.MarkupDateset;
@@ -36,6 +35,8 @@ namespace HeaderMarkup
                     bookName = bookName.Substring(0, bookName.LastIndexOf('.'));
                 string bookSavePath = Path.Combine(dataset, bookName + xlsx);
                 string markSavePath = Path.Combine(dataset, bookName + mark);
+                if (!Share.settings.SaveMarkShapes)
+                    EraseShape.EraseAll(workbook);
                 if (!File.Exists(bookSavePath))
                     workbook.SaveCopyAs(bookSavePath);
                 else if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
@@ -54,13 +55,13 @@ namespace HeaderMarkup
                 MessageBox.Show(ex.Message);
             }
         }
-        // 加载
+
+        // 加载Markup
         private void buttonLoadMarkup_Click(object sender, RibbonControlEventArgs e)
         {
             // TODO
             MessageBox.Show("TODO");
         }
-
 
         // 标记Table
         private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e)
@@ -69,7 +70,6 @@ namespace HeaderMarkup
             {
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 Excel.Range range = Utils.GetSelectedRange();
-                //Share.markups.AddTable(workbook, range);
                 var name = Share.markBookHolder.GetMarkSheet().AddTable(range.Address);
                 DrawTable.Draw(range, name);
             }
@@ -78,6 +78,7 @@ namespace HeaderMarkup
                 MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
         // 标记Header
         private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e)
         {
@@ -92,9 +93,7 @@ namespace HeaderMarkup
                     type = 1;
                 else if (e.Control.Id == buttonDataQuiteLike.Id)
                     type = 2;
-                Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 Excel.Range range = Utils.GetSelectedRange();
-                //Share.markups.AddMarkArea(workbook, range, type);
                 MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
                 string name = sheet.AddHeader(range.Address, type);
                 DrawHeader.Draw(range, type, name);
@@ -105,16 +104,13 @@ namespace HeaderMarkup
             }
         }
 
-
         // 删除操作
         private void buttonDelete_Click(object sender, RibbonControlEventArgs e) 
         {
             try
             {
-                Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 if (e.Control.Id == buttonDeleteAll.Id)
                 {
-                    //Share.markups.DeleteAll(workbook);
                     Share.markBookHolder.GetMarkSheet().DeletAll();
                     EraseShape.EraseAll();
                     return;
@@ -122,12 +118,10 @@ namespace HeaderMarkup
                 Excel.Range range = Utils.GetSelectedRange();
                 if (e.Control.Id == buttonDeleteArea.Id)
                 {
-                    //Share.markups.DeleteArea(workbook, range);
                     var name = Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
                     EraseShape.EraseByName(name);
                 }else if(e.Control.Id == buttonDeleteTable.Id)
                 {
-                    //Share.markups.DeleteTable(workbook, range);
                     var names = Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
                     EraseShape.EraseByName(names);
                 }
@@ -137,7 +131,6 @@ namespace HeaderMarkup
                 MessageBox.Show(ex.Message);
             }
         }
-
 
         // 打开,关闭设置面板
         private void buttonSettings_Click(object sender, RibbonControlEventArgs e)
@@ -155,9 +148,9 @@ namespace HeaderMarkup
                 Share.settingPanel.Visible = true;
         }
 
-
+        // TODO
         private void buttonPredict_Click(object sender, RibbonControlEventArgs e)
-        {
+        {   // 展示当前MarkSheet的效果
             try
             {
                 MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
@@ -169,9 +162,9 @@ namespace HeaderMarkup
             }
         }
 
-        // 训练模型
+        // 训练模型 TODO
         private void buttonTrain_Click(object sender, RibbonControlEventArgs e)
-        {
+        {   // 展示当前MarkBook的效果
             try
             {
                 MarkBook book = Share.markBookHolder.GetMarkBook();
@@ -183,18 +176,9 @@ namespace HeaderMarkup
             }
         }
 
+        // TODO
         private void buttonGenerateCSV_Click(object sender, RibbonControlEventArgs e)
         {
-            //try
-            //{
-            //    var dataset = Share.settings.MarkupDateset;
-            //    var csvDataset = Share.settings.CSVDataset;
-            //    HMarkupClassifier.Utils.ParseDataset(dataset, csvDataset);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
     }
 }

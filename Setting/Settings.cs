@@ -16,21 +16,21 @@ namespace HeaderMarkup.Setting
             TypeConverter(typeof(TypeConverter))]
         public string CSVDataset { get; set; } = Share.defualtCSV;
 
-        private float _tableInterval = 8f;
-        private float _markInterval = 8f;
-        [Category("Mark"), DisplayName("Shape Count"), ReadOnly(true)]
-        public int ShapeCount { get; set; } = 0;
-        [Category("Mark"), DisplayName("Interval(Table)")]
-        public float TableInterval { get { return _tableInterval; } set { _tableInterval = Math.Max(4f, Math.Min(value, 16f)); } }
-        [Category("Mark"), DisplayName("Interval(Marks)")]
-        public float HeaderInterval { get { return _markInterval; } set { _markInterval = Math.Max(4f, Math.Min(value, 16f)); } }
-        [Category("Mark"), DisplayName("Save Shapes")]
-        public bool SaveMarkupShapes { get; set; } = false;
-        [Category("Mark"), DisplayName("Save Property")]
-        public bool SaveInWorkbookProperty { get; set; } = false;
+        private float tableInterval = 8f;
+        private float headerInterval = 8f;
+        private float tableLineWeight = 1.5f;
+        private float headerLineWeight = 1.5f;
+        [Category("Mark"), DisplayName("Interval (Table)")]
+        public float TableInterval { get { return tableInterval; } set { tableInterval = Math.Max(4f, Math.Min(value, 16f)); } }
+        [Category("Mark"), DisplayName("Interval (Header)")]
+        public float HeaderInterval { get { return headerInterval; } set { headerInterval = Math.Max(4f, Math.Min(value, 16f)); } }
+        [Category("Mark"), DisplayName("Line Wieght (Table)")]
+        public float TableLineWeight { get { return tableLineWeight; } set { tableLineWeight = Math.Max(1f, Math.Min(value, 2f)); } }
+        [Category("Mark"), DisplayName("Line Wieght (Header)")]
+        public float HeaderLineWeight { get { return headerLineWeight; } set { headerLineWeight = Math.Max(1f, Math.Min(value, 2f)); } }
+        [Category("Mark"), DisplayName("Save Mark Shapes")]
+        public bool SaveMarkShapes { get; set; } = false;
 
-        [Browsable(false)]
-        public int MaxEdgeSize { get; set; } = 1000;
         [Browsable(false)]
         public string TableShapeName { get; set; } = "MarkupTableShape:";
         [Browsable(false)]
