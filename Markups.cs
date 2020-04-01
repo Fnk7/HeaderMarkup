@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 
 using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
@@ -19,7 +19,6 @@ namespace HeaderMarkup
     class RectArea
     {
         #region 构造器
-
         private struct Edge
         {
             public string edge;
@@ -48,7 +47,6 @@ namespace HeaderMarkup
 
         protected RectArea(string address)
         {
-            MessageBox.Show(address);
             this.Address = address.Trim();
             string[] temp = Address.Split(':', '$');
             int i = 0;
@@ -72,7 +70,9 @@ namespace HeaderMarkup
         {
             if (range == null) return false;
             if (range.Areas.Count != 1 || range.Height + range.Width > Share.settings.MaxEdgeSize)
+            {
                 return false;
+            }
             return true;
         }
 
@@ -147,7 +147,7 @@ namespace HeaderMarkup
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.Message);
             }
             return null;
         }
@@ -308,19 +308,13 @@ namespace HeaderMarkup
 
         #region 保存
 
-        private string GenString(Excel.Workbook workbook)
+        public string GenString(Excel.Workbook workbook)
         {
             if (!books.ContainsKey(workbook.Name)) return "";
             Book book = books[workbook.Name];
-            string temp = "";
-            foreach (var sheet in book)
-            {
-                temp += "[" + sheet.Key;
-                foreach (var rectArea in sheet.Value)
-                    temp += rectArea.ToString();
-                temp += "]";
-            }
-            return temp;
+            return string.Concat(book.Select(
+                keyValue => $"[{keyValue.Key}{string.Concat(keyValue.Value)}]"
+                ));
         }
 
         public string MarkupInfos(Excel.Workbook workbook)

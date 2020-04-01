@@ -34,6 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon));
             this.tabHMarkup = this.Factory.CreateRibbonTab();
             this.groupSave = this.Factory.CreateRibbonGroup();
             this.buttonSaveMarkup = this.Factory.CreateRibbonButton();
@@ -140,7 +141,7 @@
             this.buttonTitleQuiteLike.Label = "Quite";
             this.buttonTitleQuiteLike.Name = "buttonTitleQuiteLike";
             this.buttonTitleQuiteLike.ShowImage = true;
-            this.buttonTitleQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTitleQuiteLike_Click);
+            this.buttonTitleQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
             // buttonTitleLittleLike
             // 
@@ -148,7 +149,7 @@
             this.buttonTitleLittleLike.Label = "Little";
             this.buttonTitleLittleLike.Name = "buttonTitleLittleLike";
             this.buttonTitleLittleLike.ShowImage = true;
-            this.buttonTitleLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTitleLittleLike_Click);
+            this.buttonTitleLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
             // labelTitleLike
             // 
@@ -161,7 +162,7 @@
             this.buttonDataQuiteLike.Label = "Quite";
             this.buttonDataQuiteLike.Name = "buttonDataQuiteLike";
             this.buttonDataQuiteLike.ShowImage = true;
-            this.buttonDataQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDataQuiteLike_Click);
+            this.buttonDataQuiteLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
             // buttonDataLittleLike
             // 
@@ -169,7 +170,7 @@
             this.buttonDataLittleLike.Label = "Little";
             this.buttonDataLittleLike.Name = "buttonDataLittleLike";
             this.buttonDataLittleLike.ShowImage = true;
-            this.buttonDataLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDataLittleLike_Click);
+            this.buttonDataLittleLike.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonMarkHeader_Click);
             // 
             // labelDataLike
             // 
@@ -182,27 +183,27 @@
             // 
             // buttonDeleteAll
             // 
-            this.buttonDeleteAll.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteAll.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteAll.Image")));
             this.buttonDeleteAll.Label = "Delete All";
             this.buttonDeleteAll.Name = "buttonDeleteAll";
             this.buttonDeleteAll.ShowImage = true;
-            this.buttonDeleteAll.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteAll_Click);
+            this.buttonDeleteAll.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDelete_Click);
             // 
             // buttonDeleteArea
             // 
-            this.buttonDeleteArea.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteArea.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteArea.Image")));
             this.buttonDeleteArea.Label = "Delete Area";
             this.buttonDeleteArea.Name = "buttonDeleteArea";
             this.buttonDeleteArea.ShowImage = true;
-            this.buttonDeleteArea.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteArea_Click);
+            this.buttonDeleteArea.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDelete_Click);
             // 
             // buttonDeleteTable
             // 
-            this.buttonDeleteTable.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonDeleteTable.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeleteTable.Image")));
             this.buttonDeleteTable.Label = "Delete Table";
             this.buttonDeleteTable.Name = "buttonDeleteTable";
             this.buttonDeleteTable.ShowImage = true;
-            this.buttonDeleteTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDeleteTable_Click);
+            this.buttonDeleteTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonDelete_Click);
             // 
             // group1
             // 
@@ -214,7 +215,7 @@
             // 
             // buttonGenerateCSV
             // 
-            this.buttonGenerateCSV.Image = global::HeaderMarkup.Properties.Resources.Delete;
+            this.buttonGenerateCSV.Image = ((System.Drawing.Image)(resources.GetObject("buttonGenerateCSV.Image")));
             this.buttonGenerateCSV.Label = "Generate CSV";
             this.buttonGenerateCSV.Name = "buttonGenerateCSV";
             this.buttonGenerateCSV.ShowImage = true;

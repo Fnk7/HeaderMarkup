@@ -6,6 +6,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 using System.IO;
 
+using HeaderMarkup.Markup;
+
 namespace HeaderMarkup
 {
     public partial class Ribbon
@@ -17,30 +19,12 @@ namespace HeaderMarkup
         private static readonly string xlsx = ".xlsx";
         private static readonly string range = ".range";
 
-
-        // 获取当前实例
-        private static Excel.Workbook GetActiveWorkbook()
-        {
-            Excel.Workbook workbook = Globals.ThisAddIn.Application.ActiveWorkbook;
-            if (workbook.FileFormat == Excel.XlFileFormat.xlOpenXMLWorkbook)
-                return workbook;
-            throw new Exception($"Only support Workbook{xlsx} file.");
-        }
-
-        private static Excel.Range GetSelectedRange()
-        {
-            if (!(Globals.ThisAddIn.Application.Selection is Excel.Range))
-                return null;
-            Excel.Range range = Globals.ThisAddIn.Application.Selection;
-            return range;
-        }
-
-        // 保存
+        // 保存 TODO
         private void buttonSaveMarkup_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
-                Excel.Workbook workbook = GetActiveWorkbook();
+                Excel.Workbook workbook = Utils.GetActiveWorkbook();
                 string dataset = Share.settings.MarkupDateset;
                 string markup = Share.markups.MarkupInfos(workbook);
                 if (!Directory.Exists(dataset))
@@ -66,37 +50,93 @@ namespace HeaderMarkup
                 Share.markups.Remove(workbook);
                 workbook.Close(false, Type.Missing, Type.Missing);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Failed");
+                MessageBox.Show(ex.Message);
             }
         }
         // 加载
         private void buttonLoadMarkup_Click(object sender, RibbonControlEventArgs e)
         {
-
+            // TODO
+            MessageBox.Show("TODO");
         }
 
 
-        // 标记表
-        private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
+        // 标记Table
+        private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                Excel.Workbook workbook = Utils.GetActiveWorkbook();
+                Excel.Range range = Utils.GetSelectedRange();
+                Share.markups.AddTable(workbook, range);
+                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
+                sheet.AddTable(range.Address);
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
-        // 标记区域
-        private void buttonTitleQuiteLike_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), -2);
-        private void buttonTitleLittleLike_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), -1);
-        private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 0);
-        private void buttonDataLittleLike_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 1);
-        private void buttonDataQuiteLike_Click(object sender, RibbonControlEventArgs e) => Share.markups.AddMarkArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange(), 2);
+        }
+        // 标记Header
+        private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                int type = 0;
+                if (e.Control.Id == buttonTitleQuiteLike.Id)
+                    type = -2;
+                else if (e.Control.Id == buttonTitleLittleLike.Id)
+                    type = -1;
+                else if (e.Control.Id == buttonDataLittleLike.Id)
+                    type = 1;
+                else if (e.Control.Id == buttonDataQuiteLike.Id)
+                    type = 2;
+                Excel.Workbook workbook = Utils.GetActiveWorkbook();
+                Excel.Range range = Utils.GetSelectedRange();
+                Share.markups.AddMarkArea(workbook, range, type);
+                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
+                sheet.AddHeader(range.Address, type);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         // 删除操作
-        private void buttonDeleteAll_Click(object sender, RibbonControlEventArgs e) => Share.markups.DeleteAll(Globals.ThisAddIn.Application.ActiveWorkbook);
-        private void buttonDeleteArea_Click(object sender, RibbonControlEventArgs e) => Share.markups.DeleteArea(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
-        private void buttonDeleteTable_Click(object sender, RibbonControlEventArgs e) => Share.markups.DeleteTable(Globals.ThisAddIn.Application.ActiveWorkbook, GetSelectedRange());
+        private void buttonDelete_Click(object sender, RibbonControlEventArgs e) 
+        {
+            try
+            {
+                Excel.Workbook workbook = Utils.GetActiveWorkbook();
+                if (e.Control.Id == buttonDeleteAll.Id)
+                {
+                    Share.markups.DeleteAll(workbook);
+                    Share.markBookHolder.GetMarkSheet().DeletAll();
+                    return;
+                }
+                Excel.Range range = Utils.GetSelectedRange();
+                if (e.Control.Id == buttonDeleteArea.Id)
+                {
+                    Share.markups.DeleteArea(workbook, range);
+                    Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
+                }else if(e.Control.Id == buttonDeleteTable.Id)
+                {
+                    Share.markups.DeleteTable(workbook, range);
+                    Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
 
-        
-
-        // 打开或关闭设置面板
+        // 打开,关闭设置面板
         private void buttonSettings_Click(object sender, RibbonControlEventArgs e)
         {
             if (Share.settingPanel == null)
@@ -115,20 +155,15 @@ namespace HeaderMarkup
 
         private void buttonPredict_Click(object sender, RibbonControlEventArgs e)
         {
-            // TODO
-            //try
-            //{
-            //    var csvDataset = Share.settings.CSVDataset;
-            //    if (!File.Exists(Path.Combine(csvDataset)))
-            //        return;
-            //    var model = Path.Combine(csvDataset, Share.modelName);
-            //    HMarkupClassifier.Utils.RunPython("", $"");
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            try
+            {
+                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
+                MessageBox.Show(sheet.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         // 训练模型
@@ -136,29 +171,27 @@ namespace HeaderMarkup
         {
             try
             {
-                var csvDataset = Share.settings.CSVDataset;
-                if (!Directory.Exists(csvDataset))
-                    throw new Exception($"{csvDataset} doesn't exist.");
-                HMarkupClassifier.Utils.RunPython("", $"train {csvDataset} {Path.Combine(csvDataset, Share.modelName)}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Failed");
-            }
-        }
-
-        private void buttonGenerateCSV_Click(object sender, RibbonControlEventArgs e)
-        {
-            try
-            {
-                var dataset = Share.settings.MarkupDateset;
-                var csvDataset = Share.settings.CSVDataset;
-                HMarkupClassifier.Utils.ParseDataset(dataset, csvDataset);
+                MarkBook book = Share.markBookHolder.GetMarkBook();
+                MessageBox.Show(book.ToString());
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void buttonGenerateCSV_Click(object sender, RibbonControlEventArgs e)
+        {
+            //try
+            //{
+            //    var dataset = Share.settings.MarkupDateset;
+            //    var csvDataset = Share.settings.CSVDataset;
+            //    HMarkupClassifier.Utils.ParseDataset(dataset, csvDataset);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }

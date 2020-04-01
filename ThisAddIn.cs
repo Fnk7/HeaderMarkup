@@ -9,6 +9,7 @@ using Microsoft.Office.Tools.Excel;
 using Microsoft.Office.Tools;
 
 using HeaderMarkup.Setting;
+using HeaderMarkup.Markup;
 
 namespace HeaderMarkup
 {
@@ -19,8 +20,10 @@ namespace HeaderMarkup
         public static readonly string modelName = "forest.model";
 
         public static Settings settings;
-        public static Markups markups;
         public static CustomTaskPane settingPanel = null;
+
+        public static Markups markups;
+        public static MarkBookHolder markBookHolder;
     }
 
 
@@ -30,11 +33,13 @@ namespace HeaderMarkup
         {
             Share.settings = new Settings();
             Share.markups = new Markups();
+            Share.markBookHolder = new MarkBookHolder();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
             Share.markups = null;
+            Share.markBookHolder = null;
         }
 
         #region VSTO 生成的代码

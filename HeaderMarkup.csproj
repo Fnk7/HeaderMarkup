@@ -160,9 +160,16 @@
   -->
   <ItemGroup>
     <Compile Include="Markups.cs" />
+    <Compile Include="Markup\MarkHeader.cs" />
+    <Compile Include="Markup\MarkBook.cs" />
+    <Compile Include="Markup\MarkBookHolder.cs" />
+    <Compile Include="Markup\MarkSheet.cs" />
+    <Compile Include="Markup\MarkRange.cs" />
+    <Compile Include="Markup\MarkTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -242,6 +249,7 @@
   <ItemGroup>
     <None Include="Resources\Delete.png" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

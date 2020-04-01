@@ -117,4 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonDeleteAll.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAHJJREFUOE/N
+        ktEJgDAMRDuYoDimE6pTmKcNWJrGSD/0wZGW3AVSmn7FIhqvo8skwltBeMu1BWE8VJNBtIrm81ZCj7DV
+        K7CM4bByD7wOK7ovau7s0TWgawUrEB7iGR+H6M7evvT2XCv4npHHwmN+5S9I6QDIvR6CnDO61AAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="buttonDeleteArea.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAHJJREFUOE/N
+        ktEJgDAMRDuYoDimE6pTmKcNWJrGSD/0wZGW3AVSmn7FIhqvo8skwltBeMu1BWE8VJNBtIrm81ZCj7DV
+        K7CM4bByD7wOK7ovau7s0TWgawUrEB7iGR+H6M7evvT2XCv4npHHwmN+5S9I6QDIvR6CnDO61AAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="buttonDeleteTable.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAHJJREFUOE/N
+        ktEJgDAMRDuYoDimE6pTmKcNWJrGSD/0wZGW3AVSmn7FIhqvo8skwltBeMu1BWE8VJNBtIrm81ZCj7DV
+        K7CM4bByD7wOK7ovau7s0TWgawUrEB7iGR+H6M7evvT2XCv4npHHwmN+5S9I6QDIvR6CnDO61AAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="buttonGenerateCSV.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAHJJREFUOE/N
+        ktEJgDAMRDuYoDimE6pTmKcNWJrGSD/0wZGW3AVSmn7FIhqvo8skwltBeMu1BWE8VJNBtIrm81ZCj7DV
+        K7CM4bByD7wOK7ovau7s0TWgawUrEB7iGR+H6M7evvT2XCv4npHHwmN+5S9I6QDIvR6CnDO61AAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
 </root>
