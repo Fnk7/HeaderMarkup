@@ -10,15 +10,13 @@ namespace HeaderMarkup
 {
     static class Share
     {
-        public static readonly string defualtToMark = "D:\\Temp\\ToMark";
-        public static readonly string defualtMark = "D:\\Temp\\Mark";
-        public static readonly string defualtCSV = "D:\\Temp\\CSV";
+        public static readonly string defualtPath = "D:\\Temp";
         public static readonly string modelName = "forest.model";
 
         public static Settings settings;
         public static CustomTaskPane settingPanel = null;
 
-        public static MarkBookHolder markBookHolder;
+        public static BookHolder bookHolder;
     }
 
     static class Utils

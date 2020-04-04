@@ -8,12 +8,12 @@ namespace HeaderMarkup
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Share.settings = new Settings();
-            Share.markBookHolder = new MarkBookHolder();
+            Share.bookHolder = new BookHolder();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
-            Share.markBookHolder = null;
+            Share.bookHolder = null;
         }
 
         #region VSTO 生成的代码

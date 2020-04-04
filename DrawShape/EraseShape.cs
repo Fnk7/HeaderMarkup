@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HeaderMarkup.DrawShape
@@ -18,7 +16,7 @@ namespace HeaderMarkup.DrawShape
         public static void EraseAll(Excel.Worksheet worksheet)
         {
             foreach (Excel.Shape shape in worksheet.Shapes)
-                if (shape.Name.Contains(Share.settings.TableShapeName) || shape.Name.Contains(Share.settings.HeaderShapeName))
+                if (shape.Name.Contains(Share.settings.TableShapeName) || shape.Name.Contains(Share.settings.MarkShapeName))
                     shape.Delete();
         }
 
@@ -31,7 +29,7 @@ namespace HeaderMarkup.DrawShape
         public static void EraseByName(Excel.Worksheet worksheet, string name)
         {
             foreach (Excel.Shape shape in worksheet.Shapes)
-                if (shape.Name == Share.settings.TableShapeName + name || shape.Name == Share.settings.HeaderShapeName + name)
+                if (shape.Name == Share.settings.TableShapeName + name || shape.Name == Share.settings.MarkShapeName + name)
                 {
                     shape.Delete();
                     break;

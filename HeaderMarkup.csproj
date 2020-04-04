@@ -159,16 +159,16 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="DrawShape\DrawHeader.cs" />
+    <Compile Include="DrawShape\DrawMark.cs" />
     <Compile Include="DrawShape\DrawTable.cs" />
     <Compile Include="DrawShape\EraseShape.cs" />
     <Compile Include="Markups.cs" />
-    <Compile Include="Markup\MarkHeader.cs" />
-    <Compile Include="Markup\MarkBook.cs" />
-    <Compile Include="Markup\MarkBookHolder.cs" />
-    <Compile Include="Markup\MarkSheet.cs" />
-    <Compile Include="Markup\MarkRange.cs" />
-    <Compile Include="Markup\MarkTable.cs" />
+    <Compile Include="Markup\Mark.cs" />
+    <Compile Include="Markup\Book.cs" />
+    <Compile Include="Markup\BookHolder.cs" />
+    <Compile Include="Markup\Sheet.cs" />
+    <Compile Include="Markup\Range.cs" />
+    <Compile Include="Markup\Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

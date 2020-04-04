@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.IO;
 
 using Microsoft.Office.Tools.Ribbon;
@@ -20,35 +19,119 @@ namespace HeaderMarkup
         private static readonly string xlsx = ".xlsx";
         private static readonly string mark = ".mark";
 
-        // 保存Markup
-        private void btSaveMarkInfo_Click(object sender, RibbonControlEventArgs e)
+
+        private static bool SaveMarkInfo()
         {
-            var dataset = Share.settings.MarkDateset;
+            var markDst = Share.settings.MarkDateset;
+            if (!Directory.Exists(markDst))
+            {
+                MessageBox.Show("Need select a Mark Dataset Folder.");
+                return false;
+            }
             try
             {
-                Excel.Workbook workbook = Utils.GetActiveWorkbook();
-                var markup = Share.markBookHolder.GetMarkBook(workbook).ToString();
-                if (!Directory.Exists(dataset))
-                    Directory.CreateDirectory(dataset);
-                string bookName = workbook.Name;
-                if (File.Exists(workbook.FullName) && bookName.Contains('.'))
-                    bookName = bookName.Substring(0, bookName.LastIndexOf('.'));
-                string bookSavePath = Path.Combine(dataset, bookName + xlsx);
-                string markSavePath = Path.Combine(dataset, bookName + mark);
+                var workbook = Utils.GetActiveWorkbook();
+                var baseName = workbook.Name;
+                if (baseName.EndsWith(".xlsx"))
+                    baseName = workbook.Name.Substring(0, workbook.Name.LastIndexOf('.'));
+                string bookSavePath = Path.Combine(markDst, baseName + xlsx);
+                string markSavePath = Path.Combine(markDst, baseName + mark);
+                if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    MessageBox.Show($"The workbook is in Mark Dataset.\nMark Dataset {markDst}");
+                    return false;
+                }
                 if (!Share.settings.SaveMarkShapes)
                     EraseShape.EraseAll(workbook);
-                if (!File.Exists(bookSavePath))
-                    workbook.SaveCopyAs(bookSavePath);
-                else if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
-                    workbook.Save();
-                else if (MessageBox.Show($"Replace\t{bookSavePath}？", "Replace File",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    workbook.SaveCopyAs(bookSavePath);
-                else return;
-                using (StreamWriter markWriter = new StreamWriter(markSavePath))
-                    markWriter.Write(markup);
-                Share.markBookHolder.Remove(workbook);
+                workbook.SaveCopyAs(bookSavePath);
+                var markInfo = Share.bookHolder.GetBook(workbook).ToString();
+                using (StreamWriter markInfoWriter = new StreamWriter(markSavePath))
+                    markInfoWriter.Write(markInfo);
+                Share.bookHolder.Remove(workbook);
+                var pathDelete = workbook.FullName;
                 workbook.Close(false, Type.Missing, Type.Missing);
+                if (File.Exists(pathDelete))
+                    File.Delete(pathDelete);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        private static void OpenNext()
+        {
+            if (!Share.settings.ToMarkNext)
+                return;
+            var files = Share.settings.FilesToMark;
+            while (files.Count != 0)
+            {
+                try
+                {
+                    var file = files.Pop();
+                    Globals.ThisAddIn.Application.Workbooks.Open(file);
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            Share.settings.ToMarkNext = false;
+            MessageBox.Show("Finsh!");
+        }
+
+        // Save
+        private void btSaveMarkInfo_Click(object sender, RibbonControlEventArgs e)
+        {
+            if (SaveMarkInfo())
+                OpenNext();
+            //var dataset = Share.settings.MarkDateset;
+            //try
+            //{
+            //    Excel.Workbook workbook = Utils.GetActiveWorkbook();
+            //    var markup = Share.markBookHolder.GetMarkBook(workbook).ToString();
+            //    if (!Directory.Exists(dataset))
+            //        Directory.CreateDirectory(dataset);
+            //    string bookName = workbook.Name;
+            //    if (File.Exists(workbook.FullName) && bookName.Contains('.'))
+            //        bookName = bookName.Substring(0, bookName.LastIndexOf('.'));
+            //    string bookSavePath = Path.Combine(dataset, bookName + xlsx);
+            //    string markSavePath = Path.Combine(dataset, bookName + mark);
+            //    if (!Share.settings.SaveMarkShapes)
+            //        EraseShape.EraseAll(workbook);
+            //    if (!File.Exists(bookSavePath))
+            //        workbook.SaveCopyAs(bookSavePath);
+            //    else if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
+            //        workbook.Save();
+            //    else if (MessageBox.Show($"Replace\t{bookSavePath}？", "Replace File",
+            //        MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            //        workbook.SaveCopyAs(bookSavePath);
+            //    else return;
+            //    using (StreamWriter markWriter = new StreamWriter(markSavePath))
+            //        markWriter.Write(markup);
+            //    Share.markBookHolder.Remove(workbook);
+            //    workbook.Close(false, Type.Missing, Type.Missing);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+        }
+
+        // Drop
+        private void btDropWorkbook_Click(object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                var workbook = Utils.GetActiveWorkbook();
+                var pathDelete = workbook.FullName;
+                workbook.Close(false, Type.Missing, Type.Missing);
+                if (File.Exists(pathDelete))
+                    File.Delete(pathDelete);
+                OpenNext();
             }
             catch (Exception ex)
             {
@@ -56,47 +139,34 @@ namespace HeaderMarkup
             }
         }
 
-        // 加载Markup
-        private void btDropWorkbook_Click(object sender, RibbonControlEventArgs e)
-        {
-            // TODO
-            MessageBox.Show("TODO");
-        }
-
-        // 标记Table
-        private void btMarkTable_Click(object sender, RibbonControlEventArgs e)
+        // Mark
+        private void btMark_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
-                Excel.Workbook workbook = Utils.GetActiveWorkbook();
-                Excel.Range range = Utils.GetSelectedRange();
-                var name = Share.markBookHolder.GetMarkSheet().AddTable(range.Address);
-                DrawTable.Draw(range, name);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        // 标记Header
-        private void btMarkHeader_Click(object sender, RibbonControlEventArgs e)
-        {
-            try
-            {
-                int type = 0;
-                if (e.Control.Id == btMarkTitle.Id)
-                    type = -2;
-                else if (e.Control.Id == btMarkDataHeader.Id)
-                    type = -1;
-                else if (e.Control.Id == btMarkTitleHeader.Id)
-                    type = 1;
-                else if (e.Control.Id == btMarkData.Id)
-                    type = 2;
-                Excel.Range range = Utils.GetSelectedRange();
-                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
-                string name = sheet.AddHeader(range.Address, type);
-                DrawHeader.Draw(range, type, name);
+                var sheet = Share.bookHolder.GetSheet();
+                var range = Utils.GetSelectedRange();
+                // 1. Mark Table
+                if (e.Control.Id == btMarkTable.Id)
+                {
+                    var name = sheet.AddTable(range.Address);
+                    DrawTable.Draw(range, name);
+                }
+                // 2. Mark Others
+                else
+                {
+                    int type = 0;
+                    if (e.Control.Id == btMarkTitle.Id)
+                        type = -2;
+                    else if (e.Control.Id == btMarkTitleHeader.Id)
+                        type = -1;
+                    else if (e.Control.Id == btMarkDataHeader.Id)
+                        type = 1;
+                    else if (e.Control.Id == btMarkData.Id)
+                        type = 2;
+                    var name = sheet.AddMark(range.Address, type);
+                    DrawMark.Draw(range, type, name);
+                }
             }
             catch (Exception ex)
             {
@@ -111,18 +181,18 @@ namespace HeaderMarkup
             {
                 if (e.Control.Id == btDeleteAll.Id)
                 {
-                    Share.markBookHolder.GetMarkSheet().DeletAll();
+                    Share.bookHolder.GetSheet().DeletAll();
                     EraseShape.EraseAll();
                     return;
                 }
                 Excel.Range range = Utils.GetSelectedRange();
                 if (e.Control.Id == btDeleteMark.Id)
                 {
-                    var name = Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
+                    var name = Share.bookHolder.GetSheet().DeletMark(range.Address);
                     EraseShape.EraseByName(name);
                 }else if(e.Control.Id == btDeleteTable.Id)
                 {
-                    var names = Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
+                    var names = Share.bookHolder.GetSheet().DeletTable(range.Address);
                     EraseShape.EraseByName(names);
                 }
             }
@@ -150,10 +220,10 @@ namespace HeaderMarkup
 
         // TODO
         private void btPredict_Click(object sender, RibbonControlEventArgs e)
-        {   // 展示当前MarkSheet的效果
+        {   // 展示当前Sheet的效果
             try
             {
-                MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
+                Sheet sheet = Share.bookHolder.GetSheet();
                 MessageBox.Show(sheet.ToString());
             }
             catch (Exception ex)
@@ -164,10 +234,10 @@ namespace HeaderMarkup
 
         // 训练模型 TODO
         private void buttonTrain_Click(object sender, RibbonControlEventArgs e)
-        {   // 展示当前MarkBook的效果
+        {   // 展示当前Book的效果
             try
             {
-                MarkBook book = Share.markBookHolder.GetMarkBook();
+                Book book = Share.bookHolder.GetBook();
                 MessageBox.Show(book.ToString());
             }
             catch (Exception ex)

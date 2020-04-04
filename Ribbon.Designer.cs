@@ -44,10 +44,10 @@
             this.btMarkHeader = this.Factory.CreateRibbonButton();
             this.btMarkData = this.Factory.CreateRibbonButton();
             this.btMarkTitle = this.Factory.CreateRibbonButton();
-            this.btMarkOther = this.Factory.CreateRibbonButton();
+            this.labelNot = this.Factory.CreateRibbonLabel();
             this.btMarkDataHeader = this.Factory.CreateRibbonButton();
             this.btMarkTitleHeader = this.Factory.CreateRibbonButton();
-            this.label = this.Factory.CreateRibbonLabel();
+            this.labelSeem = this.Factory.CreateRibbonLabel();
             this.separator2 = this.Factory.CreateRibbonSeparator();
             this.btDeleteAll = this.Factory.CreateRibbonButton();
             this.btDeleteMark = this.Factory.CreateRibbonButton();
@@ -106,10 +106,10 @@
             this.grpAnnotate.Items.Add(this.btMarkHeader);
             this.grpAnnotate.Items.Add(this.btMarkData);
             this.grpAnnotate.Items.Add(this.btMarkTitle);
-            this.grpAnnotate.Items.Add(this.btMarkOther);
+            this.grpAnnotate.Items.Add(this.labelNot);
             this.grpAnnotate.Items.Add(this.btMarkDataHeader);
             this.grpAnnotate.Items.Add(this.btMarkTitleHeader);
-            this.grpAnnotate.Items.Add(this.label);
+            this.grpAnnotate.Items.Add(this.labelSeem);
             this.grpAnnotate.Items.Add(this.separator2);
             this.grpAnnotate.Items.Add(this.btDeleteAll);
             this.grpAnnotate.Items.Add(this.btDeleteMark);
@@ -124,7 +124,7 @@
             this.btMarkTable.Label = "Mark Table";
             this.btMarkTable.Name = "btMarkTable";
             this.btMarkTable.ShowImage = true;
-            this.btMarkTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkTable_Click);
+            this.btMarkTable.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
             // btMarkHeader
             // 
@@ -133,7 +133,7 @@
             this.btMarkHeader.Label = "Mark Header";
             this.btMarkHeader.Name = "btMarkHeader";
             this.btMarkHeader.ShowImage = true;
-            this.btMarkHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkHeader_Click);
+            this.btMarkHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
             // btMarkData
             // 
@@ -141,7 +141,7 @@
             this.btMarkData.Label = "Data";
             this.btMarkData.Name = "btMarkData";
             this.btMarkData.ShowImage = true;
-            this.btMarkData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkHeader_Click);
+            this.btMarkData.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
             // btMarkTitle
             // 
@@ -149,14 +149,12 @@
             this.btMarkTitle.Label = "Title";
             this.btMarkTitle.Name = "btMarkTitle";
             this.btMarkTitle.ShowImage = true;
-            this.btMarkTitle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkHeader_Click);
+            this.btMarkTitle.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
-            // btMarkOther
+            // labelNot
             // 
-            this.btMarkOther.Image = global::HeaderMarkup.Properties.Resources.Quite;
-            this.btMarkOther.Label = "Other";
-            this.btMarkOther.Name = "btMarkOther";
-            this.btMarkOther.ShowImage = true;
+            this.labelNot.Label = "Not Header";
+            this.labelNot.Name = "labelNot";
             // 
             // btMarkDataHeader
             // 
@@ -164,7 +162,7 @@
             this.btMarkDataHeader.Label = "D-Header";
             this.btMarkDataHeader.Name = "btMarkDataHeader";
             this.btMarkDataHeader.ShowImage = true;
-            this.btMarkDataHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkHeader_Click);
+            this.btMarkDataHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
             // btMarkTitleHeader
             // 
@@ -172,12 +170,12 @@
             this.btMarkTitleHeader.Label = "T-Header";
             this.btMarkTitleHeader.Name = "btMarkTitleHeader";
             this.btMarkTitleHeader.ShowImage = true;
-            this.btMarkTitleHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMarkHeader_Click);
+            this.btMarkTitleHeader.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btMark_Click);
             // 
-            // label
+            // labelSeem
             // 
-            this.label.Label = "Seem Header";
-            this.label.Name = "label";
+            this.labelSeem.Label = "Seem Header";
+            this.labelSeem.Name = "labelSeem";
             // 
             // separator2
             // 
@@ -296,8 +294,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btTODO2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btTODO3;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btTODO1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btMarkOther;
-        internal Microsoft.Office.Tools.Ribbon.RibbonLabel label;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelSeem;
+        internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelNot;
     }
 
     partial class ThisRibbonCollection

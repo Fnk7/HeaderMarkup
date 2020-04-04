@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace HeaderMarkup.Markup
 {
-    class MarkTable : MarkRange
+    class Table : Range
     {
-        public List<MarkHeader> headers;
-        public MarkTable(string address) : base(address)
+        public List<Mark> marks;
+        public Table(string address) : base(address)
         {
             if (left == right || top == bottom)
                 throw new Exception($"Invalid Table: {address}.");
-            headers = new List<MarkHeader>();
+            marks = new List<Mark>();
         }
 
         public override string Name
             => $"[Tb,{left},{top},{right},{bottom}]";
 
         public override string ToString()
-            => $"[Tb,{headers.Count},{left},{top},{right},{bottom}]"
-            + $"{string.Concat(headers)}";
+            => $"[Tb,{marks.Count},{left},{top},{right},{bottom}]"
+            + $"{string.Concat(marks)}";
     }
 }

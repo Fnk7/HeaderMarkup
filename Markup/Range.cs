@@ -4,13 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace HeaderMarkup.Markup
 {
-    class MarkRange
+    class Range
     {
         public static readonly Regex AddressRegex = new Regex(@"^\$(?<Left>[A-Z]{1,3})\$(?<Top>\d+)(?::\$(?<Right>[A-Z]{1,3})\$(?<Bottom>\d+))?$", RegexOptions.Compiled);
         public string Address { get; }
         public int left, top, right, bottom;
 
-        public MarkRange(string address)
+        public Range(string address)
         {
             Match match = AddressRegex.Match(address);
             if (!match.Success)
@@ -29,8 +29,8 @@ namespace HeaderMarkup.Markup
                 bottom = top;
             }
         }
-        public bool IsOverlap(MarkRange range) => !(left > range.right || range.left > right || top > range.bottom || range.top > bottom);
-        public bool IsInside(MarkRange range) => (left >= range.left && top >= range.top && right <= range.right && bottom <= range.bottom);
+        public bool IsOverlap(Range range) => !(left > range.right || range.left > right || top > range.bottom || range.top > bottom);
+        public bool IsInside(Range range) => (left >= range.left && top >= range.top && right <= range.right && bottom <= range.bottom);
         public virtual string Name
             => $"[R{top}C{left}:R{bottom}C{right}]";
     }

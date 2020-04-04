@@ -14,12 +14,12 @@ namespace HeaderMarkup.DrawShape
         }
     }
 
-    class DrawHeader
+    class DrawMark
     {
         public static void Draw(Excel.Range range, int type, string name)
         {
             var worksheet = range.Worksheet;
-            var interval = Share.settings.HeaderInterval;
+            var interval = Share.settings.MarkInterval;
             float left = (float)range.Left, top = (float)range.Top;
             float width = (float)range.Width, height = (float)range.Height;
             int start = (int)((left + top) / interval) + 1;
@@ -37,13 +37,13 @@ namespace HeaderMarkup.DrawShape
                 else
                     p2.Set(interval * current - top - height, top + height);
                 var line = worksheet.Shapes.AddLine(p1.x, p1.y, p2.x, p2.y);
-                line.Name = Share.settings.HeaderLineName + name + current;
+                line.Name = Share.settings.MarkLineName + name + current;
                 lines[current - start] = line.Name;
             }
-            Excel.Shape headerShape = worksheet.Shapes.Range[lines].Group();
-            headerShape.Name = Share.settings.HeaderShapeName + name;
-            headerShape.Line.Weight = Share.settings.HeaderLineWeight;
-            headerShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
+            Excel.Shape markShape = worksheet.Shapes.Range[lines].Group();
+            markShape.Name = Share.settings.MarkShapeName + name;
+            markShape.Line.Weight = Share.settings.MarkLineWeight;
+            markShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
         }
     }
 }
