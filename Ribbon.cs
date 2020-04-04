@@ -21,9 +21,9 @@ namespace HeaderMarkup
         private static readonly string mark = ".mark";
 
         // 保存Markup
-        private void buttonSaveMarkup_Click(object sender, RibbonControlEventArgs e)
+        private void btSaveMarkInfo_Click(object sender, RibbonControlEventArgs e)
         {
-            var dataset = Share.settings.MarkupDateset;
+            var dataset = Share.settings.MarkDateset;
             try
             {
                 Excel.Workbook workbook = Utils.GetActiveWorkbook();
@@ -57,14 +57,14 @@ namespace HeaderMarkup
         }
 
         // 加载Markup
-        private void buttonLoadMarkup_Click(object sender, RibbonControlEventArgs e)
+        private void btDropWorkbook_Click(object sender, RibbonControlEventArgs e)
         {
             // TODO
             MessageBox.Show("TODO");
         }
 
         // 标记Table
-        private void buttonMarkTable_Click(object sender, RibbonControlEventArgs e)
+        private void btMarkTable_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
@@ -80,18 +80,18 @@ namespace HeaderMarkup
         }
 
         // 标记Header
-        private void buttonMarkHeader_Click(object sender, RibbonControlEventArgs e)
+        private void btMarkHeader_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
                 int type = 0;
-                if (e.Control.Id == buttonTitleQuiteLike.Id)
+                if (e.Control.Id == btMarkTitle.Id)
                     type = -2;
-                else if (e.Control.Id == buttonTitleLittleLike.Id)
+                else if (e.Control.Id == btMarkDataHeader.Id)
                     type = -1;
-                else if (e.Control.Id == buttonDataLittleLike.Id)
+                else if (e.Control.Id == btMarkTitleHeader.Id)
                     type = 1;
-                else if (e.Control.Id == buttonDataQuiteLike.Id)
+                else if (e.Control.Id == btMarkData.Id)
                     type = 2;
                 Excel.Range range = Utils.GetSelectedRange();
                 MarkSheet sheet = Share.markBookHolder.GetMarkSheet();
@@ -105,22 +105,22 @@ namespace HeaderMarkup
         }
 
         // 删除操作
-        private void buttonDelete_Click(object sender, RibbonControlEventArgs e) 
+        private void btDelete_Click(object sender, RibbonControlEventArgs e) 
         {
             try
             {
-                if (e.Control.Id == buttonDeleteAll.Id)
+                if (e.Control.Id == btDeleteAll.Id)
                 {
                     Share.markBookHolder.GetMarkSheet().DeletAll();
                     EraseShape.EraseAll();
                     return;
                 }
                 Excel.Range range = Utils.GetSelectedRange();
-                if (e.Control.Id == buttonDeleteArea.Id)
+                if (e.Control.Id == btDeleteMark.Id)
                 {
                     var name = Share.markBookHolder.GetMarkSheet().DeletHeader(range.Address);
                     EraseShape.EraseByName(name);
-                }else if(e.Control.Id == buttonDeleteTable.Id)
+                }else if(e.Control.Id == btDeleteTable.Id)
                 {
                     var names = Share.markBookHolder.GetMarkSheet().DeletTable(range.Address);
                     EraseShape.EraseByName(names);
@@ -133,7 +133,7 @@ namespace HeaderMarkup
         }
 
         // 打开,关闭设置面板
-        private void buttonSettings_Click(object sender, RibbonControlEventArgs e)
+        private void btSettings_Click(object sender, RibbonControlEventArgs e)
         {
             if (Share.settingPanel == null)
             {
@@ -149,7 +149,7 @@ namespace HeaderMarkup
         }
 
         // TODO
-        private void buttonPredict_Click(object sender, RibbonControlEventArgs e)
+        private void btPredict_Click(object sender, RibbonControlEventArgs e)
         {   // 展示当前MarkSheet的效果
             try
             {

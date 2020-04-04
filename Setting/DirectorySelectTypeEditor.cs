@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace HeaderMarkup.Setting
 {
@@ -18,33 +17,24 @@ namespace HeaderMarkup.Setting
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            IWindowsFormsEditorService editorService;
             if (context == null || context.Instance == null || provider == null)
-                return Share.defualtDataset;
+                return value;
             try
             {
-                editorService = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-                string directory = (string)value;
-                try
-                {
-                    if (Path.GetFullPath(directory) != directory)
-                        directory = Share.defualtDataset;
-                }
-                catch (Exception)
-                {
-                    directory = Share.defualtDataset;
-                }
-                FolderBrowserDialog folder = new FolderBrowserDialog();
-                folder.SelectedPath = directory;
-                folder.Description = "请选择一个文件夹";
-                using (folder)
-                    if(folder.ShowDialog() == DialogResult.OK)
-                        directory = folder.SelectedPath;
-                return directory;
+                string dir = (string)value;
+                FolderBrowserDialog dialog = new FolderBrowserDialog();
+                if (Directory.Exists(dir))
+                    dialog.SelectedPath = dir;
+                else
+                    dialog.SelectedPath = "D:\\";
+                using (dialog)
+                    if(dialog.ShowDialog() == DialogResult.OK)
+                        dir = dialog.SelectedPath;
+                return dir;
             }
-            finally
+            catch (Exception)
             {
-                editorService = null;
+                return value;
             }
         }
     }

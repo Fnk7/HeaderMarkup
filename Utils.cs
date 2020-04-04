@@ -10,7 +10,8 @@ namespace HeaderMarkup
 {
     static class Share
     {
-        public static readonly string defualtDataset = "D:\\Temp\\Markup";
+        public static readonly string defualtToMark = "D:\\Temp\\ToMark";
+        public static readonly string defualtMark = "D:\\Temp\\Mark";
         public static readonly string defualtCSV = "D:\\Temp\\CSV";
         public static readonly string modelName = "forest.model";
 

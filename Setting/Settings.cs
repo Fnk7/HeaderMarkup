@@ -1,20 +1,54 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
+
+using System.IO;
 
 namespace HeaderMarkup.Setting
 {
     public class Settings
     {
-        [Category("Path"), DisplayName("Markup Dataset"), 
-            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
-            TypeConverter(typeof(TypeConverter))]
-        public string MarkupDateset { get; set; } = Share.defualtDataset;
-
-        [Category("Path"), DisplayName("CSV Dataset"), 
+        [Category("Path"), DisplayName("CSV Dataset"),
             Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string CSVDataset { get; set; } = Share.defualtCSV;
+
+        [Category("Path"), DisplayName("Mark Dataset"),
+            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
+            TypeConverter(typeof(TypeConverter))]
+        public string MarkDateset { get; set; } = Share.defualtMark;
+
+        
+
+        [Category("Path"), DisplayName("To Mark Dataset"),
+            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
+            TypeConverter(typeof(TypeConverter))]
+        public string ToMarkDateset { get; set; } = Share.defualtToMark;
+        [Category("Path"), DisplayName("To Mark Next")]
+        public bool ToMarkNext
+        {
+            get
+            {
+                if (FilesToMark == null)
+                    return false;
+                return true;
+            }
+            set 
+            {
+                if (value && Directory.Exists(ToMarkDateset))
+                {
+                    FilesToMark = new Stack<string>(Directory.GetFiles(ToMarkDateset, "*.xlsx"));
+                    if (FilesToMark.Count == 0)
+                        FilesToMark = null;
+                }
+                else
+                    FilesToMark = null;
+            }
+        }
+        [Category("Path"), DisplayName("To Mark Files"), ReadOnly(true)]
+        public Stack<string> FilesToMark { get; set; } = null;
 
         private float tableInterval = 8f;
         private float headerInterval = 8f;
