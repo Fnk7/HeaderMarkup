@@ -34,11 +34,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon));
             this.tabHMarkup = this.Factory.CreateRibbonTab();
             this.grpSaveOrDrop = this.Factory.CreateRibbonGroup();
             this.btSaveMarkInfo = this.Factory.CreateRibbonButton();
-            this.btDropWorkbook = this.Factory.CreateRibbonButton();
+            this.btDeleteWorkbook = this.Factory.CreateRibbonButton();
             this.grpAnnotate = this.Factory.CreateRibbonGroup();
             this.btMarkTable = this.Factory.CreateRibbonButton();
             this.btMarkHeader = this.Factory.CreateRibbonButton();
@@ -78,27 +77,27 @@
             // grpSaveOrDrop
             // 
             this.grpSaveOrDrop.Items.Add(this.btSaveMarkInfo);
-            this.grpSaveOrDrop.Items.Add(this.btDropWorkbook);
+            this.grpSaveOrDrop.Items.Add(this.btDeleteWorkbook);
             this.grpSaveOrDrop.Label = "Save/Drop";
             this.grpSaveOrDrop.Name = "grpSaveOrDrop";
             // 
             // btSaveMarkInfo
             // 
             this.btSaveMarkInfo.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btSaveMarkInfo.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
+            this.btSaveMarkInfo.Image = global::HeaderMarkup.Properties.Resources.save;
             this.btSaveMarkInfo.Label = "Save MarkInfo";
             this.btSaveMarkInfo.Name = "btSaveMarkInfo";
             this.btSaveMarkInfo.ShowImage = true;
             this.btSaveMarkInfo.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btSaveMarkInfo_Click);
             // 
-            // btDropWorkbook
+            // btDeleteWorkbook
             // 
-            this.btDropWorkbook.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btDropWorkbook.Image = global::HeaderMarkup.Properties.Resources.SaveMarkup;
-            this.btDropWorkbook.Label = "Drop Workbook";
-            this.btDropWorkbook.Name = "btDropWorkbook";
-            this.btDropWorkbook.ShowImage = true;
-            this.btDropWorkbook.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btDropWorkbook_Click);
+            this.btDeleteWorkbook.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btDeleteWorkbook.Image = global::HeaderMarkup.Properties.Resources.delete;
+            this.btDeleteWorkbook.Label = "Delete Workbook";
+            this.btDeleteWorkbook.Name = "btDeleteWorkbook";
+            this.btDeleteWorkbook.ShowImage = true;
+            this.btDeleteWorkbook.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btDeleteWorkbook_Click);
             // 
             // grpAnnotate
             // 
@@ -120,7 +119,7 @@
             // btMarkTable
             // 
             this.btMarkTable.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btMarkTable.Image = global::HeaderMarkup.Properties.Resources.MarkTable;
+            this.btMarkTable.Image = global::HeaderMarkup.Properties.Resources.table;
             this.btMarkTable.Label = "Mark Table";
             this.btMarkTable.Name = "btMarkTable";
             this.btMarkTable.ShowImage = true;
@@ -129,7 +128,7 @@
             // btMarkHeader
             // 
             this.btMarkHeader.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.btMarkHeader.Image = global::HeaderMarkup.Properties.Resources.MarkHeader;
+            this.btMarkHeader.Image = global::HeaderMarkup.Properties.Resources.header;
             this.btMarkHeader.Label = "Mark Header";
             this.btMarkHeader.Name = "btMarkHeader";
             this.btMarkHeader.ShowImage = true;
@@ -137,7 +136,7 @@
             // 
             // btMarkData
             // 
-            this.btMarkData.Image = global::HeaderMarkup.Properties.Resources.Quite;
+            this.btMarkData.Image = global::HeaderMarkup.Properties.Resources.data;
             this.btMarkData.Label = "Data";
             this.btMarkData.Name = "btMarkData";
             this.btMarkData.ShowImage = true;
@@ -145,7 +144,7 @@
             // 
             // btMarkTitle
             // 
-            this.btMarkTitle.Image = global::HeaderMarkup.Properties.Resources.Quite;
+            this.btMarkTitle.Image = global::HeaderMarkup.Properties.Resources.title;
             this.btMarkTitle.Label = "Title";
             this.btMarkTitle.Name = "btMarkTitle";
             this.btMarkTitle.ShowImage = true;
@@ -158,7 +157,7 @@
             // 
             // btMarkDataHeader
             // 
-            this.btMarkDataHeader.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.btMarkDataHeader.Image = global::HeaderMarkup.Properties.Resources.dataHeader;
             this.btMarkDataHeader.Label = "D-Header";
             this.btMarkDataHeader.Name = "btMarkDataHeader";
             this.btMarkDataHeader.ShowImage = true;
@@ -166,7 +165,7 @@
             // 
             // btMarkTitleHeader
             // 
-            this.btMarkTitleHeader.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.btMarkTitleHeader.Image = global::HeaderMarkup.Properties.Resources.titleHeader;
             this.btMarkTitleHeader.Label = "T-Header";
             this.btMarkTitleHeader.Name = "btMarkTitleHeader";
             this.btMarkTitleHeader.ShowImage = true;
@@ -183,7 +182,7 @@
             // 
             // btDeleteAll
             // 
-            this.btDeleteAll.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteAll.Image")));
+            this.btDeleteAll.Image = global::HeaderMarkup.Properties.Resources.deleteShape;
             this.btDeleteAll.Label = "Delete All";
             this.btDeleteAll.Name = "btDeleteAll";
             this.btDeleteAll.ShowImage = true;
@@ -191,7 +190,7 @@
             // 
             // btDeleteMark
             // 
-            this.btDeleteMark.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteMark.Image")));
+            this.btDeleteMark.Image = global::HeaderMarkup.Properties.Resources.deleteShape;
             this.btDeleteMark.Label = "Delete Mark";
             this.btDeleteMark.Name = "btDeleteMark";
             this.btDeleteMark.ShowImage = true;
@@ -199,7 +198,7 @@
             // 
             // btDeleteTable
             // 
-            this.btDeleteTable.Image = ((System.Drawing.Image)(resources.GetObject("btDeleteTable.Image")));
+            this.btDeleteTable.Image = global::HeaderMarkup.Properties.Resources.deleteShape;
             this.btDeleteTable.Label = "Delete Table";
             this.btDeleteTable.Name = "btDeleteTable";
             this.btDeleteTable.ShowImage = true;
@@ -215,7 +214,7 @@
             // 
             // btTODO1
             // 
-            this.btTODO1.Image = ((System.Drawing.Image)(resources.GetObject("btTODO1.Image")));
+            this.btTODO1.Image = global::HeaderMarkup.Properties.Resources.run;
             this.btTODO1.Label = "Generate CSV";
             this.btTODO1.Name = "btTODO1";
             this.btTODO1.ShowImage = true;
@@ -223,7 +222,7 @@
             // 
             // btTODO2
             // 
-            this.btTODO2.Image = global::HeaderMarkup.Properties.Resources.Erase;
+            this.btTODO2.Image = global::HeaderMarkup.Properties.Resources.run;
             this.btTODO2.Label = "Train Model";
             this.btTODO2.Name = "btTODO2";
             this.btTODO2.ShowImage = true;
@@ -231,7 +230,7 @@
             // 
             // btTODO3
             // 
-            this.btTODO3.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.btTODO3.Image = global::HeaderMarkup.Properties.Resources.run;
             this.btTODO3.Label = "Predict Header";
             this.btTODO3.Name = "btTODO3";
             this.btTODO3.ShowImage = true;
@@ -245,7 +244,7 @@
             // 
             // btSettings
             // 
-            this.btSettings.Image = global::HeaderMarkup.Properties.Resources.Little;
+            this.btSettings.Image = global::HeaderMarkup.Properties.Resources.settings;
             this.btSettings.Label = "Settings";
             this.btSettings.Name = "btSettings";
             this.btSettings.ShowImage = true;
@@ -289,7 +288,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btDeleteTable;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btSettings;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btDropWorkbook;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btDeleteWorkbook;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSettings;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btTODO2;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btTODO3;

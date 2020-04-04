@@ -88,41 +88,10 @@ namespace HeaderMarkup
         {
             if (SaveMarkInfo())
                 OpenNext();
-            //var dataset = Share.settings.MarkDateset;
-            //try
-            //{
-            //    Excel.Workbook workbook = Utils.GetActiveWorkbook();
-            //    var markup = Share.markBookHolder.GetMarkBook(workbook).ToString();
-            //    if (!Directory.Exists(dataset))
-            //        Directory.CreateDirectory(dataset);
-            //    string bookName = workbook.Name;
-            //    if (File.Exists(workbook.FullName) && bookName.Contains('.'))
-            //        bookName = bookName.Substring(0, bookName.LastIndexOf('.'));
-            //    string bookSavePath = Path.Combine(dataset, bookName + xlsx);
-            //    string markSavePath = Path.Combine(dataset, bookName + mark);
-            //    if (!Share.settings.SaveMarkShapes)
-            //        EraseShape.EraseAll(workbook);
-            //    if (!File.Exists(bookSavePath))
-            //        workbook.SaveCopyAs(bookSavePath);
-            //    else if (string.Equals(workbook.FullName, bookSavePath, StringComparison.InvariantCultureIgnoreCase))
-            //        workbook.Save();
-            //    else if (MessageBox.Show($"Replace\t{bookSavePath}？", "Replace File",
-            //        MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            //        workbook.SaveCopyAs(bookSavePath);
-            //    else return;
-            //    using (StreamWriter markWriter = new StreamWriter(markSavePath))
-            //        markWriter.Write(markup);
-            //    Share.markBookHolder.Remove(workbook);
-            //    workbook.Close(false, Type.Missing, Type.Missing);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
 
         // Drop
-        private void btDropWorkbook_Click(object sender, RibbonControlEventArgs e)
+        private void btDeleteWorkbook_Click(object sender, RibbonControlEventArgs e)
         {
             try
             {
@@ -174,7 +143,7 @@ namespace HeaderMarkup
             }
         }
 
-        // 删除操作
+        // Delete
         private void btDelete_Click(object sender, RibbonControlEventArgs e) 
         {
             try
@@ -202,7 +171,7 @@ namespace HeaderMarkup
             }
         }
 
-        // 打开,关闭设置面板
+        // Settings
         private void btSettings_Click(object sender, RibbonControlEventArgs e)
         {
             if (Share.settingPanel == null)
@@ -232,7 +201,7 @@ namespace HeaderMarkup
             }
         }
 
-        // 训练模型 TODO
+        // TODO
         private void buttonTrain_Click(object sender, RibbonControlEventArgs e)
         {   // 展示当前Book的效果
             try

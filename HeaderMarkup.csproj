@@ -162,7 +162,6 @@
     <Compile Include="DrawShape\DrawMark.cs" />
     <Compile Include="DrawShape\DrawTable.cs" />
     <Compile Include="DrawShape\EraseShape.cs" />
-    <Compile Include="Markups.cs" />
     <Compile Include="Markup\Mark.cs" />
     <Compile Include="Markup\Book.cs" />
     <Compile Include="Markup\BookHolder.cs" />
@@ -226,33 +225,47 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SaveMarkup.png" />
+    <None Include="Resources\data.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MarkTable.png" />
+    <None Include="Resources\dataHeader.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MarkHeader.png" />
+    <None Include="Resources\delete.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Erase.png" />
+    <None Include="Resources\deleteShape.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Redraw.png" />
+    <None Include="Resources\header.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Reset.png" />
+    <None Include="Resources\run.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Quite.png" />
+    <None Include="Resources\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Little.png" />
+    <None Include="Resources\settings.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Delete.png" />
+    <None Include="Resources\table.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\title.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\titleHeader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Erase.png" />
+    <Content Include="Resources\Little.png" />
+    <Content Include="Resources\MarkHeader.png" />
+    <Content Include="Resources\MarkTable.png" />
+    <Content Include="Resources\Quite.png" />
+    <Content Include="Resources\Redraw.png" />
+    <Content Include="Resources\Reset.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
