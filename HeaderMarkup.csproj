@@ -257,15 +257,6 @@
   <ItemGroup>
     <None Include="Resources\titleHeader.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Erase.png" />
-    <Content Include="Resources\Little.png" />
-    <Content Include="Resources\MarkHeader.png" />
-    <Content Include="Resources\MarkTable.png" />
-    <Content Include="Resources\Quite.png" />
-    <Content Include="Resources\Redraw.png" />
-    <Content Include="Resources\Reset.png" />
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
