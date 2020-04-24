@@ -187,9 +187,9 @@ namespace HeaderMarkup
                 Share.settingPanel.Visible = true;
         }
 
-        // TODO
+        // Predict
         private void btPredict_Click(object sender, RibbonControlEventArgs e)
-        {   // 展示当前Sheet的效果
+        {
             try
             {
                 var result = Classifier.Predict();
@@ -205,6 +205,11 @@ namespace HeaderMarkup
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btErasePreditc_Click(object sender, RibbonControlEventArgs e)
+        {
+            EraseShape.ErasePredict();
         }
     }
 }

@@ -6,6 +6,16 @@ namespace HeaderMarkup.DrawShape
 {
     class EraseShape
     {
+        public static void ErasePredict()
+        {
+            Excel.Workbook workbook = Utils.GetActiveWorkbook();
+            Excel.Worksheet worksheet = Utils.GetActiveWorksheet(workbook);
+            foreach (Excel.Shape shape in worksheet.Shapes)
+                if (shape.Name.Contains(Share.settings.PredictShapeName))
+                    shape.Delete();
+        }
+
+
         public static void EraseAll()
         {
             Excel.Workbook workbook = Utils.GetActiveWorkbook();

@@ -54,9 +54,8 @@
             this.btDeleteMark = this.Factory.CreateRibbonButton();
             this.btDeleteTable = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
-            this.btRF = this.Factory.CreateRibbonButton();
-            this.btNB = this.Factory.CreateRibbonButton();
-            this.btNN = this.Factory.CreateRibbonButton();
+            this.btPredict = this.Factory.CreateRibbonButton();
+            this.btErasePreditc = this.Factory.CreateRibbonButton();
             this.groupSettings = this.Factory.CreateRibbonGroup();
             this.btSettings = this.Factory.CreateRibbonButton();
             this.tabHMarkup.SuspendLayout();
@@ -218,35 +217,26 @@
             // 
             // group1
             // 
-            this.group1.Items.Add(this.btRF);
-            this.group1.Items.Add(this.btNB);
-            this.group1.Items.Add(this.btNN);
+            this.group1.Items.Add(this.btPredict);
+            this.group1.Items.Add(this.btErasePreditc);
             this.group1.Label = "Predict";
             this.group1.Name = "group1";
             // 
-            // btRF
+            // btPredict
             // 
-            this.btRF.Image = global::HeaderMarkup.Properties.Resources.run;
-            this.btRF.Label = "Random Forest";
-            this.btRF.Name = "btRF";
-            this.btRF.ShowImage = true;
-            this.btRF.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
+            this.btPredict.Image = global::HeaderMarkup.Properties.Resources.run;
+            this.btPredict.Label = "Predict";
+            this.btPredict.Name = "btPredict";
+            this.btPredict.ShowImage = true;
+            this.btPredict.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
             // 
-            // btNB
+            // btErasePreditc
             // 
-            this.btNB.Image = global::HeaderMarkup.Properties.Resources.run;
-            this.btNB.Label = "Naive Bayes";
-            this.btNB.Name = "btNB";
-            this.btNB.ShowImage = true;
-            this.btNB.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
-            // 
-            // btNN
-            // 
-            this.btNN.Image = global::HeaderMarkup.Properties.Resources.run;
-            this.btNN.Label = "Neural Net";
-            this.btNN.Name = "btNN";
-            this.btNN.ShowImage = true;
-            this.btNN.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
+            this.btErasePreditc.Image = global::HeaderMarkup.Properties.Resources.deleteShape;
+            this.btErasePreditc.Label = "Erase Shape";
+            this.btErasePreditc.Name = "btErasePreditc";
+            this.btErasePreditc.ShowImage = true;
+            this.btErasePreditc.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btErasePreditc_Click);
             // 
             // groupSettings
             // 
@@ -302,9 +292,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btSettings;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btDeleteWorkbook;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSettings;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btNB;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btNN;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btRF;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btErasePreditc;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btPredict;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelSeem;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelNot;
         internal Microsoft.Office.Tools.Ribbon.RibbonSeparator separator1;
