@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Setting\ClassifierItems.cs" />
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -213,7 +214,7 @@
     <Compile Include="Ribbon.Designer.cs">
       <DependentUpon>Ribbon.cs</DependentUpon>
     </Compile>
-    <Compile Include="Setting\DirectorySelectTypeEditor.cs" />
+    <Compile Include="Setting\DirectorySelector.cs" />
     <Compile Include="Setting\Settings.cs" />
     <Compile Include="Setting\SettingPanel.cs">
       <SubType>UserControl</SubType>

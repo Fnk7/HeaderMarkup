@@ -10,17 +10,17 @@ namespace HeaderMarkup.Setting
     public class Settings
     {
         [Category("Path"), DisplayName("CSV Dataset"),
-            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
+            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string CSVDataset { get; set; } = Share.defualtPath;
 
         [Category("Path"), DisplayName("Mark Dataset"),
-            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
+            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string MarkDateset { get; set; } = Share.defualtPath;
 
         [Category("Path"), DisplayName("To Mark Dataset"),
-            Editor(typeof(DirectorySelectTypeEditor), typeof(UITypeEditor)),
+            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string ToMarkDateset { get; set; } = Share.defualtPath;
 
@@ -48,6 +48,46 @@ namespace HeaderMarkup.Setting
 
         [Category("Path"), DisplayName("To Mark Files"), ReadOnly(true)]
         public Stack<string> FilesToMark { get; set; } = null;
+
+        private string pythonFiles = string.Empty;
+        [Category("Classifier"), DisplayName("Python Files"),
+            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
+            TypeConverter(typeof(TypeConverter))]
+        public string PythonFiles
+        {
+            get
+            {
+                return pythonFiles;
+            }
+            set
+            {
+                if (File.Exists(Path.Combine(value, "main.py")))
+                    pythonFiles = value;
+            }
+        }
+
+        private string classifier = Classifiers.Classifier.clf_names[0];
+        [Category("Classifier"), DisplayName("Classifier"), TypeConverter(typeof(ClassifierItems))]
+        public string Classifier
+        {
+            get
+            {
+                if (!Directory.Exists(pythonFiles))
+                    return string.Empty;
+                if (!File.Exists(Path.Combine(pythonFiles, classifier)))
+                    return string.Empty;
+                return classifier;
+            }
+            set
+            {
+                classifier = value;
+            }
+        }
+
+        [Category("Classifier"), DisplayName("Temp Folder"),
+            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
+            TypeConverter(typeof(TypeConverter))]
+        public string TempDir { get; set; } = Path.GetTempPath();
 
 
         private float tableInterval = 8f;

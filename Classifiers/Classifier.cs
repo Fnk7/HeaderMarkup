@@ -9,25 +9,25 @@ namespace HeaderMarkup.Classifiers
     {
         public static readonly string[] clf_names = { "random_forest.pkl", "naive_bayes.pkl", "neural_net.pkl" };
 
-        public static List<(int, int)> Predict(int clf)
+        public static List<(int, int)> Predict()
         {
-            var tempdir = Path.GetTempPath(); // TODO
+            var tempdir = Share.settings.TempDir;
+            string[] arguments = new string[3];
+            arguments[0] = Share.settings.Classifier;
+            if (arguments[0] == string.Empty)
+                throw new Exception("Need Select a Classifier.");
+            arguments[1] = Path.Combine(tempdir, "temp_sheet.csv");
+            arguments[2] = Path.Combine(tempdir, "temp_result.csv");
+            var tempxlsx = Path.Combine(tempdir, "temp_sheet.xlsx");
             var workbook = Utils.GetActiveWorkbook();
             var worksheet = Utils.GetActiveWorksheet(workbook);
-            var tempxlsx = Path.Combine(tempdir, "temp_sheet.xlsx");
-            var tempInput = Path.Combine(tempdir, "temp_sheet.csv");
-            var tempOutput = Path.Combine(tempdir, "temp_result.csv");
             workbook.SaveCopyAs(tempxlsx);
-            HMarkupClassifier.Tools.ParseWorksheet(tempxlsx, worksheet.Name, tempInput);
-            string[] arguments = new string[3];
-            arguments[0] = clf_names[clf];
-            arguments[1] = tempInput;
-            arguments[2] = tempOutput;
-            // TODO
-            var (code, output, error) = Python.RunPython("D:\\Workspace\\Python\\HeaderClf\\main.py", arguments);
+            HMarkupClassifier.Tools.ParseWorksheet(tempxlsx, worksheet.Name, arguments[1]);
+            var pythonMain = Path.Combine(Share.settings.PythonFiles, "main.py");
+            var (code, output, error) = Python.RunPython(pythonMain, arguments);
             if (code != 0)
                 throw new Exception(error);
-            return ReadResult(tempOutput);
+            return ReadResult(arguments[2]);
         }
 
 

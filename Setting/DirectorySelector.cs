@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace HeaderMarkup.Setting
 {
-    class DirectorySelectTypeEditor : UITypeEditor
+    class DirectorySelector : UITypeEditor
     {
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {

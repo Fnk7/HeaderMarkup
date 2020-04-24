@@ -192,12 +192,7 @@ namespace HeaderMarkup
         {   // 展示当前Sheet的效果
             try
             {
-                int clf = 0;
-                if (e.Control.Id == btNB.Id)
-                    clf = 1;
-                else if (e.Control.Id == btNN.Id)
-                    clf = 2;
-                var result = Classifier.Predict(clf);
+                var result = Classifier.Predict();
                 var workbook = Utils.GetActiveWorkbook();
                 var worksheet = Utils.GetActiveWorksheet(workbook);
                 foreach (var (row, col) in result)
