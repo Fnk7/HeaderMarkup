@@ -7,8 +7,6 @@ namespace HeaderMarkup.Classifiers
 {
     class Classifier
     {
-        public static readonly string[] clf_names = { "random_forest.pkl", "naive_bayes.pkl", "neural_net.pkl" };
-
         public static List<(int, int)> Predict()
         {
             var tempdir = Share.settings.TempDir;

@@ -66,7 +66,7 @@ namespace HeaderMarkup.Setting
             }
         }
 
-        private string classifier = Classifiers.Classifier.clf_names[0];
+        private string classifier = string.Empty;
         [Category("Classifier"), DisplayName("Classifier"), TypeConverter(typeof(ClassifierItems))]
         public string Classifier
         {
