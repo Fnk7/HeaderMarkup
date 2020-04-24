@@ -73,5 +73,9 @@ namespace HeaderMarkup.Setting
         public string MarkShapeName { get; set; } = "MarkShape:";
         [Browsable(false)]
         public string MarkLineName { get; set; } = "MarkLine:";
+        [Browsable(false)]
+        public string PredictShapeName { get; set; } = "PredictShape:";
+        [Browsable(false)]
+        public string PredictLineName { get; set; } = "PredictLine:";
     }
 }

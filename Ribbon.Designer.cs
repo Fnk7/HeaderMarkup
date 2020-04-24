@@ -55,7 +55,7 @@
             this.btDeleteTable = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.btRF = this.Factory.CreateRibbonButton();
-            this.btSVM = this.Factory.CreateRibbonButton();
+            this.btNB = this.Factory.CreateRibbonButton();
             this.btNN = this.Factory.CreateRibbonButton();
             this.groupSettings = this.Factory.CreateRibbonGroup();
             this.btSettings = this.Factory.CreateRibbonButton();
@@ -219,7 +219,7 @@
             // group1
             // 
             this.group1.Items.Add(this.btRF);
-            this.group1.Items.Add(this.btSVM);
+            this.group1.Items.Add(this.btNB);
             this.group1.Items.Add(this.btNN);
             this.group1.Label = "Predict";
             this.group1.Name = "group1";
@@ -230,15 +230,15 @@
             this.btRF.Label = "Random Forest";
             this.btRF.Name = "btRF";
             this.btRF.ShowImage = true;
-            this.btRF.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonGenerateCSV_Click);
+            this.btRF.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
             // 
-            // btSVM
+            // btNB
             // 
-            this.btSVM.Image = global::HeaderMarkup.Properties.Resources.run;
-            this.btSVM.Label = "Naive Bayes";
-            this.btSVM.Name = "btSVM";
-            this.btSVM.ShowImage = true;
-            this.btSVM.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.buttonTrain_Click);
+            this.btNB.Image = global::HeaderMarkup.Properties.Resources.run;
+            this.btNB.Label = "Naive Bayes";
+            this.btNB.Name = "btNB";
+            this.btNB.ShowImage = true;
+            this.btNB.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btPredict_Click);
             // 
             // btNN
             // 
@@ -302,7 +302,7 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btSettings;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btDeleteWorkbook;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSettings;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton btSVM;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btNB;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btNN;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton btRF;
         internal Microsoft.Office.Tools.Ribbon.RibbonLabel labelSeem;

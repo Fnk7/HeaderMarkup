@@ -1,11 +1,10 @@
-﻿using System;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HeaderMarkup.DrawShape
 {
-    class DrawMark
+    class DrawPredict
     {
-        public static void Draw(Excel.Range range, int type, string name)
+        public static void Draw(Excel.Range range, string name)
         {
             var worksheet = range.Worksheet;
             var interval = Share.settings.MarkInterval;
@@ -26,13 +25,13 @@ namespace HeaderMarkup.DrawShape
                 else
                     p2.Set(interval * current - top - height, top + height);
                 var line = worksheet.Shapes.AddLine(p1.x, p1.y, p2.x, p2.y);
-                line.Name = Share.settings.MarkLineName + name + current;
+                line.Name = Share.settings.PredictLineName + name + current;
                 lines[current - start] = line.Name;
             }
             Excel.Shape markShape = worksheet.Shapes.Range[lines].Group();
-            markShape.Name = Share.settings.MarkShapeName + name;
+            markShape.Name = Share.settings.PredictShapeName + name;
             markShape.Line.Weight = Share.settings.MarkLineWeight;
-            markShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.FromArgb(Math.Min(255, 255 + type * 96), Math.Max(0, type * 96), 31));
+            markShape.Line.ForeColor.RGB = Utils.RGBColor(System.Drawing.Color.BlueViolet);
         }
     }
 }

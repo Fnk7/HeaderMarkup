@@ -5,8 +5,8 @@ using Microsoft.Office.Tools.Ribbon;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Windows.Forms;
 
-using HeaderMarkup.Markup;
 using HeaderMarkup.DrawShape;
+using HeaderMarkup.Classifiers;
 
 namespace HeaderMarkup
 {
@@ -192,32 +192,24 @@ namespace HeaderMarkup
         {   // 展示当前Sheet的效果
             try
             {
-                Sheet sheet = Share.bookHolder.GetSheet();
-                MessageBox.Show(sheet.ToString());
+                int clf = 0;
+                if (e.Control.Id == btNB.Id)
+                    clf = 1;
+                else if (e.Control.Id == btNN.Id)
+                    clf = 2;
+                var result = Classifier.Predict(clf);
+                var workbook = Utils.GetActiveWorkbook();
+                var worksheet = Utils.GetActiveWorksheet(workbook);
+                foreach (var (row, col) in result)
+                {
+                    var cell = worksheet.Cells[row, col] as Excel.Range;
+                    DrawPredict.Draw(cell, $"R{row}C{col}");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        // TODO
-        private void buttonTrain_Click(object sender, RibbonControlEventArgs e)
-        {   // 展示当前Book的效果
-            try
-            {
-                Book book = Share.bookHolder.GetBook();
-                MessageBox.Show(book.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        // TODO
-        private void buttonGenerateCSV_Click(object sender, RibbonControlEventArgs e)
-        {
         }
     }
 }
