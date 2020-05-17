@@ -9,22 +9,22 @@ namespace HeaderMarkup.Setting
 {
     public class Settings
     {
-        [Category("Path"), DisplayName("CSV Dataset"),
-            Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
-            TypeConverter(typeof(TypeConverter))]
-        public string CSVDataset { get; set; } = Share.defualtPath;
+        //[Category("Path"), DisplayName("CSV Dataset"),
+        //    Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
+        //    TypeConverter(typeof(TypeConverter))]
+        //public string CSVDataset { get; set; } = Share.defualtPath;
 
-        [Category("Path"), DisplayName("Mark Dataset"),
+        [Category("Dataset"), DisplayName("Mark Dataset"),
             Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string MarkDateset { get; set; } = Share.defualtPath;
 
-        [Category("Path"), DisplayName("To Mark Dataset"),
+        [Category("Dataset"), DisplayName("To Mark Dataset"),
             Editor(typeof(DirectorySelector), typeof(UITypeEditor)),
             TypeConverter(typeof(TypeConverter))]
         public string ToMarkDateset { get; set; } = Share.defualtPath;
 
-        [Category("Path"), DisplayName("To Mark Next")]
+        [Category("Dataset"), DisplayName("To Mark Next")]
         public bool ToMarkNext
         {
             get
@@ -46,7 +46,7 @@ namespace HeaderMarkup.Setting
             }
         }
 
-        [Category("Path"), DisplayName("To Mark Files"), ReadOnly(true)]
+        [Category("Dataset"), DisplayName("To Mark Files"), ReadOnly(true)]
         public Stack<string> FilesToMark { get; set; } = null;
 
         private string pythonFiles = string.Empty;
